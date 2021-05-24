@@ -34,6 +34,7 @@ namespace back.Domain.Repository
 
                 _devCollection.InsertOne(dev);
                 return true;
+
             }catch(Exception)
             {
                 return false;
@@ -47,6 +48,7 @@ namespace back.Domain.Repository
                 return _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.isDeleted != true))
                     .SortBy(_ => _.Name)
                     .ToList();
+                    
             }catch(Exception){
 
                 return null;
@@ -57,7 +59,13 @@ namespace back.Domain.Repository
         {
             try
             {
-                _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update.Set("IsDeleted", true));
+                //var dev = ifExist(id);
+                var dev = _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update.Set("IsDeleted", true));
+                
+
+                if(dev == null){
+                    return false;
+                }
                 return true;
 
             }catch(Exception)
@@ -68,7 +76,11 @@ namespace back.Domain.Repository
 
         public Developer GetByid(int id)
         {
-            var dev = _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.Id == id));
+            var dev = ifExist(id);
+            
+            if(dev == null){
+                return null;
+            }
 
             return (Developer) dev;
         }
@@ -100,6 +112,17 @@ namespace back.Domain.Repository
             {
                 return false;
             }
+        }
+
+        private Developer ifExist(int id){
+            
+            var dev =_devCollection.Find(Builders<Developer>.Filter.Where(_ => _.Id == id)).FirstOrDefault();
+            
+            if(dev == null){
+                return null;
+            }
+
+            return dev;
         }
     }
 }
