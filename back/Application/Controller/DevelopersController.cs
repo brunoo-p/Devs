@@ -32,7 +32,7 @@ namespace back.Application.Controller
 
 
         [HttpGet("{id}")]
-        public ActionResult<Developer> GetDevById(int id){
+        public ActionResult<Developer> GetDevById(string id){
 
             var dev = _repository.GetByid(id);
 
@@ -58,9 +58,9 @@ namespace back.Application.Controller
 
 
         [HttpPut ("{id}")]
-        public ActionResult UpadateDev(Developer dev){
+        public ActionResult UpadateDev(string id, [FromBody] Developer dev){
 
-            var newDev = _repository.Update(dev);
+            var newDev = _repository.Update(id, dev);
 
             if(!newDev){
                 return StatusCode(400, "Server fail in update");
@@ -72,7 +72,7 @@ namespace back.Application.Controller
 
 
         [HttpDelete ("{id}")]
-        public ActionResult DeleteDev(int id){
+        public ActionResult DeleteDev(string id){
 
             var dev = _repository.Delete(id);
 
