@@ -9,8 +9,11 @@ namespace back.Domain.Repository
 {
     public class DeveloperRepository : IDeveloperRepository<Developer>
     {
-        Connection _mongoDB;
-        IMongoCollection<Developer> _devCollection;
+        readonly Connection _mongoDB;
+        readonly IMongoCollection<Developer> _devCollection;
+
+        public DeveloperRepository(){}
+
         public DeveloperRepository(Connection connection)
         {
             _mongoDB = connection;
@@ -22,14 +25,14 @@ namespace back.Domain.Repository
             try
             {
 
-                // (string Name, char Gender, int Age, string Hobby, DateTime BirthDate ) = obj;
+                //(string Name, char Gender, int Age, string Hobby, DateTime BirthDate ) = obj;
 
                 var dev = new Developer(
-                    name: obj.Name,
-                    gender: obj.Gender,
-                    age: obj.Age,
-                    hobby: obj.Hobby,
-                    birth: obj.BirthDate
+                    obj.Name,
+                    obj.Gender,
+                    obj.Age,
+                    obj.Hobby,
+                    obj.BirthDate
                 );
 
                 _devCollection.InsertOne(dev);
@@ -37,6 +40,7 @@ namespace back.Domain.Repository
 
             }catch(Exception)
             {
+                //throw new Exception("error: ", err);
                 return false;
             }
         }
@@ -45,7 +49,7 @@ namespace back.Domain.Repository
         {
             try{
 
-                return _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.isDeleted != true))
+                return _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.IsDeleted != true))
                     .SortBy(_ => _.Name)
                     .ToList();
                     
@@ -55,7 +59,7 @@ namespace back.Domain.Repository
             }
         }
 
-        public bool Delete(int id)
+        public bool Delete(string id)
         {
             try
             {
@@ -74,7 +78,7 @@ namespace back.Domain.Repository
             }
         }
 
-        public Developer GetByid(int id)
+        public Developer GetByid(string id)
         {
             var dev = ifExist(id);
             
@@ -85,7 +89,7 @@ namespace back.Domain.Repository
             return (Developer) dev;
         }
 
-        public bool Update(Developer obj)
+        public bool Update(string id, Developer obj)
         {
             var dev = new Developer(
                     obj.Name,
@@ -99,7 +103,7 @@ namespace back.Domain.Repository
                 //_devCollection.FindOneAndDeleteAsync(Builders<Developer>.Filter.Where(_ => _.Id == obj.Id));
                 //_devCollection.InsertOne(dev);
                 
-                _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == obj.Id), Builders<Developer>.Update
+                _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update
                     .Set("Name", obj.Name)
                     .Set("Gender", obj.Gender)
                     .Set("Age", obj.Age)
@@ -114,9 +118,9 @@ namespace back.Domain.Repository
             }
         }
 
-        private Developer ifExist(int id){
+        private Developer ifExist(string id){
             
-            var dev =_devCollection.Find(Builders<Developer>.Filter.Where(_ => _.Id == id)).FirstOrDefault();
+            var dev =_devCollection.Find(Builders<Developer>.Filter.Where(_ => _.Id == id && _.IsDeleted != true)).FirstOrDefault();
             
             if(dev == null){
                 return null;

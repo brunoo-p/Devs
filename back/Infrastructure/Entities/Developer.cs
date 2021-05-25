@@ -1,24 +1,33 @@
 using System;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace back.Infrastructure.Entities
 {
     public class Developer : Base
     {
+        
+        [BsonRequired]
         public string Name { get;  set; }
+        
+        [BsonRequired]
         public char Gender { get;  set; }
+        
+        [BsonRequired]
         public int Age { get;  set; }
+        
         public string Hobby { get;  set; }
+        
         public DateTime BirthDate { get;  set; }
 
-        public bool isDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
 
-        public Developer(string name, char gender, int age, string hobby, DateTime birth)
+        public Developer(string name, char gender, int age, string hobby, DateTime birthDate)
         {
             Name = name;
             Gender = gender;
             Age = age;
             Hobby = hobby;
-            BirthDate = birth;
+            BirthDate = birthDate;
         }
 
         // public void setName(string name){
