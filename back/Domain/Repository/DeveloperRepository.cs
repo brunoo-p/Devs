@@ -40,7 +40,6 @@ namespace back.Domain.Repository
 
             }catch(Exception)
             {
-                //throw new Exception("error: ", err);
                 return false;
             }
         }
@@ -122,8 +121,6 @@ namespace back.Domain.Repository
             );
 
             try{
-                //_devCollection.FindOneAndDeleteAsync(Builders<Developer>.Filter.Where(_ => _.Id == obj.Id));
-                //_devCollection.InsertOne(dev);
                 
                 _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update
                     .Set("Name", obj.Name)
