@@ -17,23 +17,9 @@ namespace back.Application.Controller
         }
 
 
-        [HttpGet]
-        public ActionResult<List<Developer>> GetAllDevs(){
-            
-            var devsList = _repository.All();
-
-            if(devsList == null || devsList.Count == 0 ){
-
-                return StatusCode(200, "Nenhum dev cadastrado");
-            }
-
-            return StatusCode(200, devsList);
-
-        }
-
-
         [HttpGet("{id}")]
-        public ActionResult<Developer> GetDevById(string id){
+        public ActionResult<Developer> GetDevById(string id)
+        {
 
             var dev = _repository.GetByid(id);
 
@@ -44,9 +30,24 @@ namespace back.Application.Controller
             return StatusCode(200, dev);
         }
 
+        [HttpGet]
+        //[Route("{param?}")]
+        public ActionResult<List<Developer>> GetAll_Or_WithParam([FromQuery] string param = "")
+        {
+            var dev = _repository.GetAll_Or_WithParam(param);
+
+            if(dev == null || dev.Count.Equals(0))
+            {
+                return StatusCode(404, "Nothing founded with param");
+            }
+
+            return StatusCode(200, dev);
+        }
+
 
         [HttpPost]
-        public ActionResult AddDev([FromBody] Developer dev){
+        public ActionResult AddDev([FromBody] Developer dev)
+        {
 
             var newDev = _repository.Add(dev);
 
@@ -59,7 +60,8 @@ namespace back.Application.Controller
 
 
         [HttpPut ("{id}")]
-        public ActionResult UpadateDev(string id, [FromBody] Developer dev){
+        public ActionResult UpadateDev(string id, [FromBody] Developer dev)
+        {
 
             var newDev = _repository.Update(id, dev);
 
@@ -73,7 +75,8 @@ namespace back.Application.Controller
 
 
         [HttpDelete ("{id}")]
-        public ActionResult DeleteDev(string id){
+        public ActionResult DeleteDev(string id)
+        {
 
             var dev = _repository.Delete(id);
 

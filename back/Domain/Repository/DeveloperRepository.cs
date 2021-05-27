@@ -89,6 +89,28 @@ namespace back.Domain.Repository
             return (Developer) dev;
         }
 
+        public List<Developer> GetAll_Or_WithParam(string param)
+        {
+            param = param.ToLower();
+            
+            var dev = _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.IsDeleted != true))
+                .ToList();
+            
+            var finded = new List<Developer>();
+
+                foreach(var find in dev){
+                    if(find.Hobby.ToLower().Contains(param) || find.Name.ToLower().Contains(param)){
+
+                        finded.Add(find);
+                    };
+                }
+            
+
+            return finded;
+
+        }
+        
+
         public bool Update(string id, Developer obj)
         {
             var dev = new Developer(

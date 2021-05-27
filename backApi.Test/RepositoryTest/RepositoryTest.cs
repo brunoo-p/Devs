@@ -98,16 +98,31 @@ namespace backApi.Test
         [Fact]
         public void Pegar_TodosDevsRegistrados_RetornarUmaLista()
         {
-
+            /*-----------------> Pegando todos <----------------------------*/
+            string paramEmpty = "";
             //Arrange
-            mockDev.Setup(_ => _.All()).Returns(() => new List<Developer>{});
-            var resultadoEsperado = _repository.All();
+            mockDev.Setup(_ => _.GetAll_Or_WithParam(paramEmpty)).Returns(() => new List<Developer>{});
+            var resultadoEsperado = _repository.GetAll_Or_WithParam(paramEmpty);
             
             //Act
-            var resultadoRecebido = mockDev.Object.All();
+            var resultadoRecebido = mockDev.Object.GetAll_Or_WithParam(paramEmpty);
 
             //Assert
             Assert.NotNull(resultadoRecebido);
+
+
+            /*-----------------> Pegar por parâmetro <----------------------------*/
+            string param = "bruno";
+            //Arrange
+            mockDev.Setup(_ => _.GetAll_Or_WithParam(param)).Returns(() => new List<Developer>{});
+            var esperado = _repository.GetAll_Or_WithParam(param);
+            
+            //Act
+            var recebido = mockDev.Object.GetAll_Or_WithParam(param);
+
+            //Assert
+            Assert.NotNull(resultadoRecebido);
+            
         }
 
         [Fact]
