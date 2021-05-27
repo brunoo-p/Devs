@@ -21,7 +21,8 @@ namespace back.Application.Controller
         public ActionResult<List<Developer>> GetAllDevs(){
             
             var devsList = _repository.All();
-            if(devsList.Count == 0 ){
+
+            if(devsList == null || devsList.Count == 0 ){
 
                 return StatusCode(200, "Nenhum dev cadastrado");
             }
