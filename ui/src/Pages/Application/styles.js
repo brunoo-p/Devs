@@ -4,8 +4,17 @@ export const Container = styled.div`
     font-family: 'Roboto', sans serif;
     overflow: hidden;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
 `;
 export const Content = styled.div`
-
-height: 100vh;`;
+    height: 100vh;
+    width: 100%;
+    max-width: 400px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+`;
