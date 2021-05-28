@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Home, Application } from './Pages';
+import { Home, Application, AccountConfiguration } from './Pages';
 
 export default function Routes() {
     return (
@@ -8,6 +8,7 @@ export default function Routes() {
             <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route path="/developers" component={Application}/>
+                <Route path="/dev/settings" component={AccountConfiguration}/>
             </Switch>
         </BrowserRouter>
     )

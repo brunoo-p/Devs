@@ -10,7 +10,7 @@ namespace back.Infrastructure.Database
         {
             try{
 
-                var client = new MongoClient("mongodb://bruno:false@localhost:27017/admin");
+                var client = new MongoClient("mongodb://root:exemple@mongo:27017");
                 database = client.GetDatabase("Devs");
                 
             }catch(MongoException ex){
