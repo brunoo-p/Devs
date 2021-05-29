@@ -1,13 +1,12 @@
-
+import React from 'react';
 import { Container, Content } from './styles';
 
-export default function Header({ children }) {
-    
+export default function ScreenModel({ children }) {
     return (
         <Container>
             <Content>
                 { children }
-            </Content>  
+            </Content>
         </Container>
     )
 }
