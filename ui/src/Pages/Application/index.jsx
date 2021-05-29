@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import api from '../../Services/api'
-import { Header, ScreenApp, InteractiveButtons } from '../../Components';
+import { ScreenModel, Header, ScreenApp, InteractiveButtons, AccountConfiguration } from '../../Components';
 
-import { Container, Content } from './styles';
+import { SettingsIcon, LogoIcon, ChatIcon } from './styles';
 
 export default function Application() {
+    
+    let history = useHistory();
 
     const [ persons, setPersons ] = useState([]);
-    let nada = "bruno";
+    const [ settings, setSettings ] = useState(false);
+    const [ filter, setFilter ] = useState("");
 
     useEffect(() => {
         ( async () => {
@@ -26,15 +30,28 @@ export default function Application() {
 
     }, []);
 
-    return (
-        <Container>
 
-            <Content>
-                <Header/>
+    const handleSettings = () => {
+        setSettings(!settings);
+    }
+
+
+    return (
+        <ScreenModel>
+        
+                <AccountConfiguration setFilter={setFilter}  settings={settings}/>
+                
+                <Header>
+
+                    <SettingsIcon onClick={handleSettings}/>
+                    <LogoIcon onClick={() => history.replace("/developers")}/>
+                    <ChatIcon/>
+                
+                </Header>
+                
                 <ScreenApp persons={persons}/>
                 {persons.length > 0 && <InteractiveButtons/>}
-            </Content>
-            
-        </Container>
+        
+        </ScreenModel>
     )
 }
