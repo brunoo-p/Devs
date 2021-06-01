@@ -10,24 +10,30 @@ namespace back.Infrastructure.Entities
         
         [BsonRequired]
         public string Name { get;  set; }
+        [BsonRequired]
+        public string Nickname { get; set; }
         
         [BsonRequired]
         public char Gender { get;  set; }
-        
+
+        public char SchooseGender { get; set; }  
+
         public int Age { get;  set; }
         
         public string Hobby { get;  set; }
-        
+        [BsonRequired]
         public string BirthDate { get;  set; }
 
         public bool IsDeleted { get; set; } = false;
         public string ImageProfile { get; set; }
 
-        public IFormFile PathImage { get; set; }
-        public Developer(string name, char gender, int age, string birthDate)
+        //public IFormFile PathImage { get; set; }
+        public Developer(string name, string nickname, char gender, char schooseGender, int age, string birthDate)
         {
             Name = name;
+            Nickname = nickname;
             Gender = gender;
+            SchooseGender = schooseGender;
             Age = age;
             BirthDate = birthDate;
         }

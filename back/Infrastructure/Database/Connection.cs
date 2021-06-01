@@ -11,7 +11,7 @@ namespace back.Infrastructure.Database
             try{
 
                 //var client = new MongoClient("mongodb://root:exemple@mongo:27017");
-                var client = new MongoClient("mongodb+srv://brunoo-p:false@cluster.oyyye.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+                var client = new MongoClient("Connetion Database");
                 database = client.GetDatabase("Devs");
                 
             }catch(MongoException ex){

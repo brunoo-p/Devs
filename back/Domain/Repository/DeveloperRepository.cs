@@ -26,9 +26,17 @@ namespace back.Domain.Repository
         {
             try
             {
+                var findNickname = GetByNickname(obj.Nickname);
+                
+                if(findNickname != null){
+                    return false;
+                }
+
                 var dev = new Developer(
                     name: obj.Name,
+                    nickname: obj.Nickname,
                     gender: obj.Gender,
+                    schooseGender: obj.SchooseGender,
                     age: obj.Age,
                     birthDate: obj.BirthDate
                 );
@@ -50,7 +58,7 @@ namespace back.Domain.Repository
                 var dev = _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update.Set("IsDeleted", true));
                 
 
-                if(dev == null){
+                if(dev != null){
                     return false;
                 }
                 return true;
@@ -86,9 +94,12 @@ namespace back.Domain.Repository
                 }
 
                 var finded = new List<Developer>();
+                
                 foreach(var find in dev){
 
-                    if(find.Gender == 'F'){
+                    var response = find.Hobby.ToLower();
+                    
+                    if(response.Contains(param)){
 
                         finded.Add(find);
                     };
@@ -123,11 +134,11 @@ namespace back.Domain.Repository
             return finded;
         }
 
-        public List<Developer> GetByGender(string gender)
+        public Developer GetByNickname(string nickname)
         {
-            return _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.IsDeleted != true && _.Gender.Equals(gender)))
-                .ToList();
-            
+            return _devCollection.Find(Builders<Developer>.Filter
+                .Where(_ => _.IsDeleted != true && _.Nickname == nickname))
+                .FirstOrDefault();
         }
         
 
@@ -166,5 +177,6 @@ namespace back.Domain.Repository
 
             return dev;
         }
+
     }
 }

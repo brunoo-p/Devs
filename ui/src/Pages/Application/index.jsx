@@ -17,14 +17,17 @@ export default function Application() {
         ( async () => {
             
             const storage = JSON.parse(localStorage.getItem('user'));
-            let param = storage.schooseGender;
+            let param = storage.gender;
 
             const request = await api.get(`/developers/find?gender=${param}`);
             console.log(request);
+            const finded = request.data.filter(_ => _.id !== storage.id);
+
+            console.log("finded", finded);
             
             setTimeout(() => {
 
-                setPersons(request.data);
+                setPersons(finded);
 
             }, 1000);
         })();
@@ -37,23 +40,23 @@ export default function Application() {
     }, []);
     
 
-    // useEffect(() => {
-    //     (async () => {
+    useEffect(() => {
+        (async () => {
 
-    //         if(filter.length > 0){
+            if(filter.length > 0){
 
-    //             const request = await api.get(`/developers?param=${filter}`);
+                const request = await api.get(`/developers?param=${filter}`);
                 
-    //             setPersons(request.data);
-    //         }
+                setPersons(request.data);
+            }
 
-    //     })();
+        })();
 
-    //     return () => {
-    //         setPersons([]);
-    //     }
+        return () => {
+            setPersons([]);
+        }
 
-    // }, [filter])
+    }, [filter])
 
 
     const handleSettings = () => {

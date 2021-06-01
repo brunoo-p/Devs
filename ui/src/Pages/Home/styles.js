@@ -24,6 +24,7 @@ export const Content = styled.div`
 
     @media(min-width: 700px)
     {
+        transition: .5s ease-in;
         height: 90%;
         transform: translateY(-5%);
     }
@@ -31,7 +32,7 @@ export const Content = styled.div`
     .start{
         position: absolute;
         display: flex;
-        top: 10%;
+        top: 5%;
         align-items: center;
         justify-content: center;
         width: 100%;
@@ -47,7 +48,8 @@ export const Content = styled.div`
             border-radius: 10px;
             font-size: 20px;
             font-weight: 700;
-            background: transparent;
+            // background: transparent;
+            background: linear-gradient(5deg,transparent 64.17%, #1aaa);
             color: #1aa;
             border: 2px solid #1aaa;
             transition: .5s ease-out;
@@ -56,6 +58,14 @@ export const Content = styled.div`
 
             filter: drop-shadow(3px 3px 0px 7px white);
 
+            :nth-child(3){
+                transform: translateY(130%);
+                background: linear-gradient(45deg,transparent 47.93%, #1aaa);
+                color: #dfe4ea;
+                border: 2px solid #1aaa;
+
+                
+            }
             :hover{
                 background: linear-gradient(125deg, #1aaa, white);
                 color: #262626;
@@ -73,11 +83,11 @@ export const Form = styled.form`
     align-items: center;
     justify-content: space-between;
     
-    animation: align .7s forwards ease-in;
+    animation: align .6s forwards ease-in;
 
     @keyframes align {
-        from {width: 900% opacity: 0}
-        to   {width: 95% opacity: 1}
+        from {transform: translateY(100%); opacity: 0}
+        to   {transform: translateY(0%); opacity: 1}
     }
 
     input{

@@ -23,6 +23,7 @@ namespace back.Application.Controller
         //     var devList = _repository.
         // }
 
+
         [HttpGet("{id}")]
         public ActionResult<Developer> GetDevById(string id)
         {
@@ -35,6 +36,7 @@ namespace back.Application.Controller
 
             return StatusCode(200, dev);
         }
+
 
         [HttpGet ("{param?}")]
         public ActionResult<List<Developer>> GetAllWithParam([FromQuery] string param = null)
@@ -49,6 +51,7 @@ namespace back.Application.Controller
             return StatusCode(200, dev);
         }
 
+
         [HttpGet ("find/{gender?}")]
         public ActionResult<List<Developer>> GetByGender([FromQuery] char gender='T')
         {
@@ -60,6 +63,20 @@ namespace back.Application.Controller
             }
 
             return StatusCode(200, dev);
+        }
+
+
+
+        [HttpPost("login/{nickname}")]
+        public ActionResult<Developer> Login(string nickname)
+        {
+            var dev  = _repository.GetByNickname(nickname);
+            if(dev == null)
+            {
+                return StatusCode(404, "Dev not founded");
+            }
+            return StatusCode(200, dev);
+
         }
 
 
@@ -78,6 +95,7 @@ namespace back.Application.Controller
         }
 
 
+
         [HttpPut]
         [Route("{id}")]
         public ActionResult UpadateDev(string id, Developer dev)
@@ -92,6 +110,7 @@ namespace back.Application.Controller
 
             return StatusCode(200, "Sucefully");
         }
+
 
 
         [HttpDelete ("{id}")]
