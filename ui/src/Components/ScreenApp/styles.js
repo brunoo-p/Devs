@@ -36,7 +36,7 @@ export const Content = styled.div`
         height: 83vh;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
+        cursor: grab;
     }
 
     .swipe{

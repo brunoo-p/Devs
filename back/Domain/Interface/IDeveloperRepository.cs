@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace back.Domain.Interface
 {
     public interface IDeveloperRepository<T> where T : class
     {
-       List<T> GetAll_Or_WithParam(string param);
+       List<T> GetWithParam(string param);
        T GetByid(string id);
-       bool Add(T obj);
+       List<T> GetByGender(char param);
+       Task<bool> Add(T obj);
        bool Update(string id, T obj);
        bool Delete(string id);
     }
