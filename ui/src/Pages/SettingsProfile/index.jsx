@@ -12,8 +12,8 @@ export default function SettingsProfile() {
     let history = useHistory();
 
     const [ inputHobby, setInputHobby ] = useState("Andar de moto e tocar ukulele");
-    const [ ownGender, setOwnGender ] = useState("");
     const [ name, setName ] = useState("");
+    const [ id, setId ] = useState("");
     const [ imageProfile, setImageProfile ] = useState(null);
 
     useEffect(() => {
@@ -24,8 +24,9 @@ export default function SettingsProfile() {
             
             if(storage != null){
     
-                setName(storage.user);
-                setOwnGender(storage.ownGender);
+                setName(storage.name);
+                setId(storage.id);
+                setImageProfile(storage.ImageProfile);
             }
         })()
         
@@ -38,8 +39,6 @@ export default function SettingsProfile() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        let id = "60b5273888318a555271cc17";
 
         const data = {name: `${name}`, hobby: `${inputHobby}`, imageProfile: `${imageProfile.url}`};
 

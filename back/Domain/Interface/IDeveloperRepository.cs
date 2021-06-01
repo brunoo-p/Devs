@@ -8,6 +8,7 @@ namespace back.Domain.Interface
        List<T> GetWithParam(string param);
        T GetByid(string id);
        List<T> GetByGender(char param);
+       T GetByNickname(string param);
        Task<bool> Add(T obj);
        bool Update(string id, T obj);
        bool Delete(string id);

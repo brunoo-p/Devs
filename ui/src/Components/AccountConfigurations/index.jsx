@@ -18,6 +18,11 @@ export default function AccountConfiguration({setFilter, settings}) {
         }
     }
 
+    const handleExit = () => {
+        history.replace("/");
+        localStorage.removeItem('user');
+    }
+
     return (
         <Container transform={!settings ? '-100%' : '0'} opacity={settings ? '1' : '0'}>
             <Content > 
@@ -39,7 +44,7 @@ export default function AccountConfiguration({setFilter, settings}) {
                 </div>
                 <div className="card" >
                     <label 
-                        onClick={() => history.push('/')}
+                        onClick={handleExit}
                         style={{color: '#ff7979', cursor: 'pointer'}}
                     >
                         Sair

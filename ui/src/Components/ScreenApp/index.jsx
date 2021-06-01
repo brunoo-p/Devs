@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TinderCard from 'react-tinder-card';
 import DetailsDev from '../DetailsDev';
 import avatarDefault from '../../Assets/avatarDefault.png'
