@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using back.Domain.Interface;
 using back.Infrastructure.Database;
 using back.Infrastructure.Entities;
@@ -20,41 +22,23 @@ namespace back.Domain.Repository
             _devCollection = _mongoDB.database.GetCollection<Developer>("Developer");
         }
 
-        public bool Add(Developer obj)
+        public async Task<bool> Add(Developer obj)
         {
             try
             {
-
-                //(string Name, char Gender, int Age, string Hobby, DateTime BirthDate ) = obj;
-
                 var dev = new Developer(
-                    obj.Name,
-                    obj.Gender,
-                    obj.Age,
-                    obj.Hobby,
-                    obj.BirthDate
+                    name: obj.Name,
+                    gender: obj.Gender,
+                    age: obj.Age,
+                    birthDate: obj.BirthDate
                 );
 
-                _devCollection.InsertOne(dev);
+                await _devCollection.InsertOneAsync(dev);
                 return true;
 
             }catch(Exception)
             {
                 return false;
-            }
-        }
-
-        public List<Developer> All()
-        {
-            try{
-
-                return _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.IsDeleted != true))
-                    .SortBy(_ => _.Name)
-                    .ToList();
-                    
-            }catch(Exception){
-
-                return null;
             }
         }
 
@@ -88,52 +72,87 @@ namespace back.Domain.Repository
             return (Developer) dev;
         }
 
-        public List<Developer> GetAll_Or_WithParam(string param)
+        public List<Developer> GetWithParam(string param)
         {
-            param = param.ToLower();
-            
-            var dev = _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.IsDeleted != true))
-                .ToList();
-            
-            var finded = new List<Developer>();
+            try{
 
+                
+                var dev = _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.IsDeleted != true))
+                    .ToList();
+                
+
+                if(param == null){
+                    return dev;
+                }
+
+                var finded = new List<Developer>();
                 foreach(var find in dev){
-                    if(find.Hobby.ToLower().Contains(param) || find.Name.ToLower().Contains(param)){
+
+                    if(find.Gender == 'F'){
 
                         finded.Add(find);
                     };
                 }
-            
+
+                return finded;
+
+            }catch(Exception ex){
+                throw new Exception("d", ex);
+            }    
+        }
+
+        public List<Developer> GetByGender(char gender)
+        {
+            var dev = _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.IsDeleted != true))
+                .ToList();
+
+            if(gender == 'T')
+            {
+                return dev;
+            }
+
+            var finded = new List<Developer>();
+            foreach(var find in dev){
+
+                if(find.Gender == gender){
+
+                    finded.Add(find);
+                };
+            }
 
             return finded;
+        }
 
+        public List<Developer> GetByGender(string gender)
+        {
+            return _devCollection.Find(Builders<Developer>.Filter.Where(_ => _.IsDeleted != true && _.Gender.Equals(gender)))
+                .ToList();
+            
         }
         
 
         public bool Update(string id, Developer obj)
         {
             var dev = new Developer(
-                    obj.Name,
-                    obj.Gender,
-                    obj.Age,
-                    obj.Hobby,
-                    obj.BirthDate
+                    name: obj.Name,
+                    hobby: obj.Hobby,
+                    imageProfile: obj.ImageProfile
             );
 
             try{
                 
                 _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update
-                    .Set("Name", obj.Name)
-                    .Set("Gender", obj.Gender)
-                    .Set("Age", obj.Age)
-                    .Set("Hobby", obj.Hobby) 
+                    .Set("Name", dev.Name)
+                    .Set("Hobby", dev.Hobby)
+                    .Set("ImageProfile", dev.ImageProfile) 
                 );
 
                 return true;
             
-            }catch
+            }catch(Exception ex)
             {
-                return false;
+                throw new Exception("e", ex);
+                //return false;
             }
         }
 

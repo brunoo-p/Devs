@@ -5,14 +5,15 @@ export const Container = styled.div`
     display: flex;
     top: 10%;
     width: 90%;
-    height: 20%;
+    height: 24%;
     border-radius: 10px;
     opacity: ${(props) => props.opacity};
     position: fixed;
     z-index: 1;
-    transition: .5s ease-in;
+    transition: .3s ease-in;
     transform: translateX(${(props) => props.transform});
-    background: #f5f5f5;
+    background: rgba(245,245,240,.6);
+    overflow: hidden;
 
     @media (min-width: 700px){
         width: 29%;
@@ -25,7 +26,6 @@ export const Content = styled.div`
     margin: 5px 0px;
     flex-direction: column;
     backdrop-filter: blur(4px);
-    transition: .5s ease-in;
 
     .card{
         display: flex;
@@ -60,8 +60,7 @@ export const Content = styled.div`
 
         input{
             padding: 5px;
-            border: none;
-            border-bottom: 2px solid gray;
+            border: 2px solid #1aaa;
             font-size: 20px;
             font-weight: 700;
             color: #34495e;

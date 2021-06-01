@@ -37,6 +37,14 @@ export default function AccountConfiguration({setFilter, settings}) {
                 <div className="card profile">
                     <label onClick={() => history.push('/settings')}> Ver detalhes do perfil </label>
                 </div>
+                <div className="card" >
+                    <label 
+                        onClick={() => history.push('/')}
+                        style={{color: '#ff7979', cursor: 'pointer'}}
+                    >
+                        Sair
+                    </label>
+                </div>
             </Content>
         </Container>
     )

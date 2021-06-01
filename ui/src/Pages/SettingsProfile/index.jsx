@@ -1,20 +1,78 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { ScreenModel, Header } from '../../Components';
-import foto from '../../Assets/foto.jpg';
-import { Content, LogoIcon, ReturnIcon, ImageProfile } from './styles';
+import api from '../../Services/api';
 
+import { ScreenModel, Header } from '../../Components';
+
+import avatarDefault from '../../Assets/avatarDefault.png';
+import { Content, LogoIcon, ReturnIcon, ImageProfile } from './styles';
 
 export default function SettingsProfile() {
 
     let history = useHistory();
 
-    const [ inputValue, setInputValue ] = useState("Andar de moto e tocar ukulele");
-    const [ changeInput, setChagenInput ] = useState(false);
+    const [ inputHobby, setInputHobby ] = useState("Andar de moto e tocar ukulele");
+    const [ ownGender, setOwnGender ] = useState("");
+    const [ name, setName ] = useState("");
+    const [ imageProfile, setImageProfile ] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+
+            let storage =  await JSON.parse(localStorage.getItem('user'));
+            console.log(storage);
+            
+            if(storage != null){
+    
+                setName(storage.user);
+                setOwnGender(storage.ownGender);
+            }
+        })()
+        
+    }, [])
 
     const handleExit = () => {
         history.replace("/");
+        localStorage.removeItem('user');
     }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        let id = "60b5273888318a555271cc17";
+
+        const data = {name: `${name}`, hobby: `${inputHobby}`, imageProfile: `${imageProfile.url}`};
+
+        const request = await api.put(`/developers/${id}`, data);
+        console.log(request);
+        
+        history.push("/developers");
+    }
+
+
+    //<--- Image
+    const changeFile = async ({target}) => {   
+        let files = target.files[0];
+
+
+        const profile = {
+            file: files,
+            url: URL.createObjectURL(files)
+        }
+        setImageProfile(profile);
+        // if(files != null){
+
+        //     const profile = {
+        //         file: files,
+        //         url: URL.createObjectURL(files)
+        //     }
+
+        //     setProfileImage(profile);
+        // }
+
+    }
+    //<-- 
+
 
     return (
         <ScreenModel>
@@ -27,18 +85,29 @@ export default function SettingsProfile() {
             <Content>
                 <div className="card card-image">
 
-                    <ImageProfile src={foto}/>
-                    <label htmlFor="image-profile">Alterar Foto</label>
-                    <input type="file" name="image-profile" id="image-profile" style={{display: 'none'}}/>
+                    <ImageProfile src={imageProfile ? imageProfile.url : avatarDefault}  style={{backgroundSize: imageProfile && 'cover'}}htmlFor="image-profile"/>
+                    <label htmlFor="image-profile" style={{cursor: 'pointer', border: '1px solid #1aaa'}}>Alterar Foto</label>
+                    <input type="file" name="image-profile" id="image-profile" style={{display: 'none'}} onChange={changeFile}/>
+                </div>
+
+                <div className="card card-name">
+                    <label >{name}</label>
+                    <input type="text"  placeholder="[ Alterar Nome ]" required onChange={(event) => setName(event.target.value)}/>
                 </div>
 
                 <div className="card card-hobby">
 
-                    <textarea value={inputValue}  onChange={(event) => setInputValue(event.target.value)} />
-                    <label onClick={() => setChagenInput(!changeInput)} >Editar Hobby</label>
+                    <label >Meu Hobby</label>
+                    <textarea
+                        value={inputHobby} 
+                        onChange={(event) => setInputHobby(event.target.value)}
+                    />
                     
                 </div>
 
+                    <div className="saveSettings">
+                        <input className="salvar" type="submit" value="Salvar" onClick={handleSubmit}/>
+                    </div>
             </Content>
         
         </ScreenModel>

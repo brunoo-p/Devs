@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace back.Infrastructure.Entities
@@ -12,39 +14,33 @@ namespace back.Infrastructure.Entities
         [BsonRequired]
         public char Gender { get;  set; }
         
-        [BsonRequired]
         public int Age { get;  set; }
         
         public string Hobby { get;  set; }
         
-        public DateTime BirthDate { get;  set; }
+        public string BirthDate { get;  set; }
 
         public bool IsDeleted { get; set; } = false;
+        public string ImageProfile { get; set; }
 
-        public Developer(string name, char gender, int age, string hobby, DateTime birthDate)
+        public IFormFile PathImage { get; set; }
+        public Developer(string name, char gender, int age, string birthDate)
         {
             Name = name;
             Gender = gender;
             Age = age;
-            Hobby = hobby;
             BirthDate = birthDate;
         }
 
-        // public void setName(string name){
-        //     Name = name;
-        // }
-        // public void setGender(char gender){
-        //     Gender = gender;
-        // }
-        // public void setAge(int age){
-        //     Age = age;
-        // }
-        // public void setHobby(string hobby){
-        //     Hobby = hobby;
-        // }
-        // public void setBirth(DateTime birth){
-        //     BirthDate = birth;
-        // }
 
+        public Developer(string name, string hobby, string imageProfile)
+        {
+            Name = name;
+            Hobby = hobby;
+            ImageProfile = imageProfile;
+        }
+        
+
+        public Developer(){ }
     }
 }

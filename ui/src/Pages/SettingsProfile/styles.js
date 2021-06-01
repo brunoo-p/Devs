@@ -1,44 +1,137 @@
 import styled from 'styled-components';
 import { IoLogoFirebase } from 'react-icons/io5';
 import { BsBoxArrowInLeft } from 'react-icons/bs';
-import foto from '../../Assets/foto.jpg';
+
 
 export const Content = styled.div`
     display: flex;
-    width: 99%;
-    height: 100%;
+    width: 95%;
+    height: 80%;
     flex-direction: column;
+    justify-content: space-around;
+    background: #fff;
+    border-radius: 10px;
+    background: #353b48;
+    color: #dfe4ea;
+    //padding: 10px;
+
+    input{
+        width: 50%;
+        padding: 8px;
+        border-radius: 5px;
+        border: none;
+        font-size: 12px;
+        font-weight: 700;
+        text-align: center;
+
+        :focus{
+            outline: none;
+        }
+    }
     
     .card{
         display: flex;
         width: 93%;
         justify-content: center;
         align-items: center;
-        border-bottom: 1px solid grey;
-        padding: 20px 11px;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 10px;
         flex-direction: column;
         
 
         label{
-            margin: 15px 15px 0px 15px;
-            font-size: 18px;
+            margin: 10px 10px 0px 10px;
+            font-size: 14px;
             font-weight: 700;
+
+        }
+    }
+
+    .card-name{
+        padding: 5px 10px;
+        label{
+            font-size: 18px;
+        }
+        input{
+            font-size: 14px;
+            color: whiteSmoke;
+            background: transparent;
+            border: 1px dashed white;
         }
     }
 
     .card-hobby{
-        margin-top: 10px;
+        border-top: 1px solid lightgrey;
+        margin-bottom: 5px;
+        justify-content: flex-start;
+
+        label{
+            opacity: .7;
+        }
         
         textarea{
-            width: 100%;
-            height: 20vh;
-            padding: 5px;
-            background: #f5f5f5;
-            border: none;
+            width: 90%;
+            height: 10vh;
+            padding: 20px;
+            
+            margin-top: 5px;
+            background: transparent;
+            //border: 1px solid grey;
             border-radius: 10px;
+
+            color: #dfe4ea;
+            font-weight: 700;
             font-size: 18px;
-            //pointer-events: none;
+
+            :focus{
+                outline: none;
+            }
         }
+    }
+
+    .card-image{
+        border-bottom: 1px solid lightgrey;
+        label{
+            padding: 8px;
+            border: 1px solid lightgrey;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+    }
+    .saveSettings{
+        padding: 5px;
+        margin-top 5%;
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin-left: 30%;
+        border-radius: 10px;
+        background: linear-gradient(32deg, rgba(30,36,49, .4), #2aaa );
+        cursor: pointer;
+
+        input{
+            width: 70%;
+
+            background: transparent;
+            border: transparent;
+
+            color: #dfe4ea;
+            opacity: .4;
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor:pointer;
+            :hover{
+                opacity: 1;
+            }
+            :focus{
+                outline: none;
+            }
+        }
+
     }
 
 `;
@@ -63,17 +156,15 @@ export const ReturnIcon = styled(BsBoxArrowInLeft)`
     
     cursor: pointer;
     border-radius: 50px;
-    //fill: #ff7272;
-    //filter: drop-shadow(0 0 0.1rem yellow);
 `;
 
 export const ImageProfile = styled.div`
 
     width: 100%;
-    height: 20vh;
+    height: 23vh;
     background-image: url(${(props) => props.src});
     background-position: center;
-    background-size: cover;
+    //background-size: cover;
     background-repeat: no-repeat;
     border-radius: 10px;
 

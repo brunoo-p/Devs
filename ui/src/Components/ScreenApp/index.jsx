@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import DetailsDev from '../DetailsDev';
-import foto from '../../Assets/foto.jpg'
+import avatarDefault from '../../Assets/avatarDefault.png'
 import searching from '../../Assets/Lottie/searching.json';
 import Lottie from 'react-lottie';
 
@@ -36,7 +36,7 @@ export default function ScreenApp({persons}) {
                                 
                                 <div className="card">
 
-                                    <CardImage src={foto}>
+                                    <CardImage src={person.ImageProfile ? person.ImageProfile : avatarDefault }>
                                         <CardName>{person.name}</CardName>
                                     </CardImage>
 
