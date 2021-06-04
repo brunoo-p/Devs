@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { MdKeyboardArrowUp } from 'react-icons/md';
 
 export const Container = styled.div`
     width: 100%;
     position: absolute;
-    opacity: 0.2;
+    bottom: -5%;
     border-radius: 10px;
     background: white;
-    backdrop-filter: blur(1px);
-    transform: translateY(${(props) => props.moved});
     transition: 0.5s ease-in
 
 `;
@@ -22,7 +21,7 @@ export const Content = styled.div`
     flex-direction: column;
 
     .border{
-        width: 40%;
+        width: 40%;        
         background: lightgrey;
         transform: translateX(70%) translateY(-20%);
         height: 10px;
@@ -33,6 +32,8 @@ export const Content = styled.div`
     }
     .personData{
         padding: 10px 5px;
+        transition: .5s ease-in;
+        filter: blur(2px);
         h1{
             font-size: 40px;
         }
@@ -46,6 +47,8 @@ export const Content = styled.div`
 
     .hobby{
         padding: 15px 5px;
+        transition: .6s ease-in;
+        filter: blur(2px);
 
         label{
             font-size: 22px;
@@ -69,9 +72,25 @@ export const ArrowDown = styled(MdKeyboardArrowDown)`
     display: flex;
     cursor: pointer;
     animation: down 1.5s infinite;
+    color: #1aaa;
 
     @keyframes down {
         0%, 100% {transform: translateY(0px) }
         50%   {transform: translateY(8px) }
     }
 `;
+
+export const ArrowUp = styled(MdKeyboardArrowUp)`
+    width: 40px;
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+    animation: down 1.5s infinite;
+
+    @keyframes down {
+        0%, 100% {transform: translateY(0px) }
+        50%   {transform: translateY(-8px) }
+    }
+`;
+
+

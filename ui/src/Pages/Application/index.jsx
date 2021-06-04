@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import api from '../../Services/api'
 import { ScreenModel, Header, ScreenApp, InteractiveButtons, AccountConfiguration } from '../../Components';
 
-import { SettingsIcon, LogoIcon, ChatIcon } from './styles';
+import { Container, SettingsIcon, LogoIcon, ChatIcon } from './styles';
 
 export default function Application() {
     
@@ -16,20 +16,20 @@ export default function Application() {
     useEffect(() => {
         ( async () => {
             
-            const storage = JSON.parse(localStorage.getItem('user'));
-            let param = storage.gender;
 
-            const request = await api.get(`/developers/find?gender=${param}`);
-            console.log(request);
-            const finded = request.data.filter(_ => _.id !== storage.id);
-
-            console.log("finded", finded);
+            const finded = await GetAllDevs();
             
-            setTimeout(() => {
+            
+            let time = setTimeout(() => {
 
                 setPersons(finded);
 
             }, 1000);
+
+            return () => {
+                clearTimeout(time);
+            }
+
         })();
 
         
@@ -43,11 +43,18 @@ export default function Application() {
     useEffect(() => {
         (async () => {
 
-            if(filter.length > 0){
+            if(filter?.length > 0){
 
+                console.log("filter", filter);
                 const request = await api.get(`/developers?param=${filter}`);
+                console.log(request);
                 
                 setPersons(request.data);
+
+            }else{
+
+                const finded = await GetAllDevs();
+                setPersons(finded);
             }
 
         })();
@@ -58,28 +65,46 @@ export default function Application() {
 
     }, [filter])
 
+    const GetAllDevs = async () => {
+        const storage = JSON.parse(localStorage.getItem('user'));
+        let param = storage.schooseGender;
+
+        const request = await api.get(`/developers/find?gender=${param}`);
+
+        return request.data.filter(_ => _.id !== storage.id);
+    }
+
 
     const handleSettings = () => {
         setSettings(!settings);
     }
-
+    const handleFilter = () => {
+        setFilter("");
+    }
 
     return (
-        <ScreenModel>
-        
-            <AccountConfiguration setFilter={setFilter}  settings={settings}/>
+        <Container>
+            <ScreenModel>
             
-            <Header>
+                <AccountConfiguration setFilter={setFilter}  settings={settings} setSettings={setSettings}/>
+                
+                <Header>
 
-                <SettingsIcon onClick={handleSettings}/>
-                <LogoIcon onClick={() => history.replace("/developers")}/>
-                <ChatIcon/>
-            
-            </Header>
-            
-            <ScreenApp persons={persons}/>
-            {persons.length > 0 && <InteractiveButtons/>}
-    
-        </ScreenModel>
+                    <SettingsIcon onClick={handleSettings}/>
+                    <LogoIcon onClick={() => history.replace("/developers")}/>
+                    <ChatIcon/>
+                </Header>
+                {filter &&
+                    <label className="filterContainer">
+                        <p onClick={handleFilter}> X </p>
+
+                        {filter}
+                    </label>}
+                
+                <ScreenApp persons={persons}/>
+                {persons.length > 0 && <InteractiveButtons/>}
+        
+            </ScreenModel>
+        </Container>
     )
 }

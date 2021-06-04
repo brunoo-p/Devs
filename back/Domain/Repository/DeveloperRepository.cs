@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using back.Domain.Interface;
@@ -31,7 +32,7 @@ namespace back.Domain.Repository
                 if(findNickname != null){
                     return false;
                 }
-
+                
                 var dev = new Developer(
                     name: obj.Name,
                     nickname: obj.Nickname,
@@ -58,7 +59,7 @@ namespace back.Domain.Repository
                 var dev = _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update.Set("IsDeleted", true));
                 
 
-                if(dev != null){
+                if(dev == null){
                     return false;
                 }
                 return true;
@@ -92,7 +93,7 @@ namespace back.Domain.Repository
                 if(param == null){
                     return dev;
                 }
-
+                
                 var finded = new List<Developer>();
                 
                 foreach(var find in dev){
@@ -144,13 +145,18 @@ namespace back.Domain.Repository
 
         public bool Update(string id, Developer obj)
         {
-            var dev = new Developer(
-                    name: obj.Name,
-                    hobby: obj.Hobby,
-                    imageProfile: obj.ImageProfile
-            );
-
             try{
+
+                var ms = new MemoryStream();
+                    obj.ImagePath.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+
+                var dev = new Developer(
+                        name: obj.Name,
+                        hobby: obj.Hobby,
+                        imageProfile: fileBytes
+                );
+
                 
                 _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update
                     .Set("Name", dev.Name)

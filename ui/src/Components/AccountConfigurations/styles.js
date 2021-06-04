@@ -12,11 +12,12 @@ export const Container = styled.div`
     z-index: 1;
     transition: .3s ease-in;
     transform: translateX(${(props) => props.transform});
-    background: rgba(245,245,240,.6);
+    background: rgba(245,245,240,.8);
     overflow: hidden;
 
     @media (min-width: 700px){
         width: 29%;
+        height: 28%;
     }
 `;
 

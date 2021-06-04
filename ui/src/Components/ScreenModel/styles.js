@@ -14,7 +14,7 @@ export const Container = styled.div`
 export const Content = styled.div`
     height: 100vh;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     align-items: center;
     display: flex;
     flex-direction: column;

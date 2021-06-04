@@ -9,28 +9,28 @@ using Xunit;
 
 namespace backApi.Test.ControllerTest
 {
-    public class ControllerTest
-    {
-        [Fact]
-        public void AddRoute()
-        {
-            var newDev = new Developer(
+    // public class ControllerTest
+    // {
+    //     [Fact]
+    //     public void AddRoute()
+    //     {
+    //         var newDev = new Developer(
 
-                name: "batata",
-                gender: 'M',
-                age: 24,
-                hobby: "Andar de moto e tocar ukulele",
-                birthDate: new DateTime(1994, 01, 03) 
-            );
+    //             name: "batata",
+    //             gender: 'M',
+    //             age: 24,
+    //             hobby: "Andar de moto e tocar ukulele",
+    //             birthDate: new DateTime(1994, 01, 03) 
+    //         );
 
-            var mockRepositiory = new Mock<IDeveloperRepository<Developer>>();
-            var controller = new DevelopersController(mockRepositiory.Object);
+    //         var mockRepositiory = new Mock<IDeveloperRepository<Developer>>();
+    //         var controller = new DevelopersController(mockRepositiory.Object);
 
-            var result = controller.AddDev(newDev);
+    //         var result = controller.AddDev(newDev);
 
-            Assert.NotNull(result);
-            Assert.IsType<ObjectResult>(result);
+    //         Assert.NotNull(result);
+    //         Assert.IsType<ObjectResult>(result);
             
-        }
-    }
+    //     }
+    // }
 }

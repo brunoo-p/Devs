@@ -98,13 +98,13 @@ namespace back.Application.Controller
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult UpadateDev(string id, Developer dev)
+        public ActionResult UpadateDev(string id,[FromForm] Developer dev)
         {
 
             var newDev = _repository.Update(id, dev);
 
             if(!newDev){
-                return StatusCode(400, "Server fail in update");
+                return StatusCode(300, "Server fail in update");
                 
             }
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using back.Infrastructure.Database;
 using Moq;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace backApi.Test
 {
@@ -30,14 +31,15 @@ namespace backApi.Test
             //Arrange
             var newDev = new Developer(
 
-                name: "batata",
+                name: "Bruno",
+                nickname: "bruno",
                 gender: 'M',
+                schooseGender: 'F',
                 age: 24,
-                hobby: "Andar de moto e tocar ukulele",
-                birthDate: new DateTime(1994, 01, 03) 
+                birthDate: "06-03-1997"
             );
             
-            mockDev.Setup(_ => _.Add(newDev)).Returns(true);
+            //mockDev.Setup(_ => _.Add(newDev)).Returns();
             
 
             /*------------------> Teste para passar <----------------------------*/
@@ -57,22 +59,16 @@ namespace backApi.Test
             Assert.Equal(resultadoRecebido_Errado, resultadoEsperado_Errado);
         }
 
+
         [Fact]
         public void Pegar_Dev_PorId()
         {
             
             //Arrange
-            string idCorreto = "60ad4e15ed1e7c90ba2fd0f8";
+            string idCorreto = "60b69a6dcc3864ef36d1829a";
             string idErrado =  "000000000000000000000009";
             
-            mockDev.Setup(dev => dev.GetByid(idCorreto)).Returns(new Developer(
-
-                name: "Bruno",
-                gender: 'M',
-                age: 24,
-                hobby: "Andar de moto e tocar ukulele",
-                birthDate: new DateTime(1997, 03, 06) 
-            ));
+            mockDev.Setup(dev => dev.GetByid(idCorreto)).Returns(new Developer());
             
             /*------------------> Teste para passar <----------------------------*/
             //Act
@@ -96,16 +92,16 @@ namespace backApi.Test
         }
 
         [Fact]
-        public void Pegar_TodosDevsRegistrados_RetornarUmaLista()
+        public void Pegar_PorFiltro_RetornarUmaLista()
         {
             /*-----------------> Pegando todos <----------------------------*/
-            string paramEmpty = "";
+            string paramEmpty = "ukulele";
             //Arrange
-            mockDev.Setup(_ => _.GetAll_Or_WithParam(paramEmpty)).Returns(() => new List<Developer>{});
-            var resultadoEsperado = _repository.GetAll_Or_WithParam(paramEmpty);
+            mockDev.Setup(_ => _.GetWithParam(paramEmpty)).Returns(() => new List<Developer>{});
+            var resultadoEsperado = _repository.GetWithParam(paramEmpty);
             
             //Act
-            var resultadoRecebido = mockDev.Object.GetAll_Or_WithParam(paramEmpty);
+            var resultadoRecebido = mockDev.Object.GetWithParam(paramEmpty);
 
             //Assert
             Assert.NotNull(resultadoRecebido);
@@ -114,11 +110,11 @@ namespace backApi.Test
             /*-----------------> Pegar por parâmetro <----------------------------*/
             string param = "bruno";
             //Arrange
-            mockDev.Setup(_ => _.GetAll_Or_WithParam(param)).Returns(() => new List<Developer>{});
-            var esperado = _repository.GetAll_Or_WithParam(param);
+            mockDev.Setup(_ => _.GetWithParam(param)).Returns(() => new List<Developer>{});
+            var esperado = _repository.GetWithParam(param);
             
             //Act
-            var recebido = mockDev.Object.GetAll_Or_WithParam(param);
+            var recebido = mockDev.Object.GetWithParam(param);
 
             //Assert
             Assert.NotNull(resultadoRecebido);
@@ -134,11 +130,11 @@ namespace backApi.Test
 
             var dev = new Developer(
 
-                name: "Blabla ",
-                gender: 'F',
-                age: 14,
-                hobby: "Correr na rua",
-                birthDate: new DateTime(1997, 03, 06) 
+                // name: "Blabla ",
+                // gender: 'F',
+                // age: 14,
+                // hobby: "Correr na rua",
+                // birthDate: new DateTime(1997, 03, 06) 
             );
             
             mockDev.Setup(_ => _.Update(idCorreto, dev)).Returns(true);

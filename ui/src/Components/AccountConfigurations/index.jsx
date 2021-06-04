@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Container, Content, ToggleOn, ToggleOff  } from './styles';
 
 
-export default function AccountConfiguration({setFilter, settings}) {
+export default function AccountConfiguration({setFilter, settings, setSettings}) {
 
     let history = useHistory();
     let inputRef = useRef(null);
@@ -15,6 +15,7 @@ export default function AccountConfiguration({setFilter, settings}) {
             setFilter(event.target.value);
             inputRef.current.value = "";
             setWriteFilter(false);
+            setSettings(false);
         }
     }
 
@@ -24,7 +25,7 @@ export default function AccountConfiguration({setFilter, settings}) {
     }
 
     return (
-        <Container transform={!settings ? '-100%' : '0'} opacity={settings ? '1' : '0'}>
+        <Container transform={!settings ? '-100%' : '0'} opacity={settings ? '1' : '0'} style={{pointerEvents: !settings && 'none'}}>
             <Content > 
                 <div className="card">
 
@@ -40,7 +41,7 @@ export default function AccountConfiguration({setFilter, settings}) {
                 </div>
 
                 <div className="card profile">
-                    <label onClick={() => history.push('/settings')}> Ver detalhes do perfil </label>
+                    <label onClick={() => history.push('/settings')}> Detalhes do meu perfil </label>
                 </div>
                 <div className="card" >
                     <label 
