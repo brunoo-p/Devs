@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../../Services/api';
 import { useHistory } from 'react-router';
 
@@ -6,6 +6,7 @@ import Particle from 'react-particles-js';
 
 import { ScreenModel } from '../../Components';
 import { Content, LogoIcon, Form, Code, CodeSlash, UserIcon } from './styles';
+import { CalculateAge } from '../../Services/GetAge';
 
 
 export default function Home() {
@@ -19,6 +20,12 @@ export default function Home() {
     const [showPortal, setShowPortal ] = useState(true);
     const [ registered, setRegistered ] = useState(false);
 
+    useEffect(() => {
+        registered ? document.querySelector("#nick").focus()
+        :
+        document.querySelector("#name")?.focus();
+    },[registered]);
+
 
     const onRegister = async (event) => {
         event.preventDefault();
@@ -26,12 +33,10 @@ export default function Home() {
         document.querySelector('#btnSubmit').value = "Enviando...";
         
 
-
         let birthDate = document.querySelector("#birth").value;
-        let d = birthDate.split('-');
-        birthDate = `${d[2]}-${d[1]}-${d[0]}`; 
+
+        let age = CalculateAge(birthDate);
         
-        let age = 34;
 
         const response = await api.post('/developers', {name: user, nickname, gender: ownGender, schooseGender, age, birthDate});
         console.log(response);
@@ -45,32 +50,36 @@ export default function Home() {
         }
         
     }
-    const onLogin = (event) => {
+     const onLogin = (event) => {
         event.preventDefault();
 
         if(nickname){
 
             getLogin();
         }
-    }
+     }
 
     const getLogin = async () => {
 
-        const response = await api.post(`/developers/login/${nickname}`);
-        let data = response.data;
-        console.log(data);
+        document.querySelector('#btnSubmit').value = "Enviando...";
 
-        if(response.status === 200)
-        {
-            localStorage.setItem('user', JSON.stringify(data));
-            history.push("/settings");
+        try{
+            const response = await api.post(`/developers/login/${nickname}`);
+            let data = response.data;
             
-        }else if(response.status === 404)
-        {
+            if(response.status === 200)
+            {
+                localStorage.setItem('user', JSON.stringify(data));
+                history.push("/settings");
+            }else
+            {
+                alert("Tivemos um problema interno, tente novamente mais tarde");
+            }
+
+        }catch{
+
             alert("Confira se digitou corretamente o Nickname");
-        }else
-        {
-            alert("Tivemos um problema interno, tente novamente mais tarde");
+            document.querySelector('#btnSubmit').value = "Enviar";
         }
     }
 
@@ -127,9 +136,9 @@ export default function Home() {
                         <Form onSubmit={onRegister}>
                             <label style={{color: '#dfe4ea', fontSize: '15px'}}> <Code/> Cadastrar <CodeSlash/></label>
                             
-                            <label htmlFor="image-profile"> <UserIcon/> </label>
+                            <label htmlFor="image-profile"> <UserIcon   style={{height: schooseGender && '30px', }}/> </label>
                             
-                            <input type="text"  placeholder="Nome" required onChange={(event) => setUser(event.target.value)}/>
+                            <input type="text"   id="name" placeholder="Nome" required onChange={(event) => setUser(event.target.value)}/>
                             <input type="text"  placeholder="Nickname" required onChange={(event) => setNickname(event.target.value)}/>
                             
 
@@ -159,7 +168,7 @@ export default function Home() {
 
                             </div>
                             {
-                                schooseGender ? <input type="submit" id="btnSubmit" style={{cursor: 'pointer'}}/> : <button disabled={user.length > 0 ? true : false}/>
+                                schooseGender ? <input type="submit" id="btnSubmit" style={{cursor: 'pointer'}} className="btnRegister"/> : <button disabled={user.length > 0 ? true : false}/>
                             }
                         </Form>
                         :
@@ -169,7 +178,7 @@ export default function Home() {
                             
                             <label htmlFor="image-profile"> <UserIcon/> </label>
                             
-                            <input type="text"  placeholder="Nickname" required onChange={(event) => setNickname(event.target.value)}/>
+                            <input type="text"  id="nick" placeholder="Nickname" required onChange={(event) => setNickname(event.target.value)}/>
                             
                             {
                                 nickname ? <input type="submit" id="btnSubmit" style={{cursor: 'pointer'}} /> : <button disabled={user.length > 0 ? true : false}/>

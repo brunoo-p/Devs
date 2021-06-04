@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import api from '../../Services/api';
+import { EncodedToBlob } from '../../Services/EncodedToBlob';
 
 import { ScreenModel, Header } from '../../Components';
 
@@ -11,7 +12,7 @@ export default function SettingsProfile() {
 
     let history = useHistory();
 
-    const [ inputHobby, setInputHobby ] = useState("Andar de moto e tocar ukulele");
+    const [ inputHobby, setInputHobby ] = useState("");
     const [ name, setName ] = useState("");
     const [ id, setId ] = useState("");
     const [ imageProfile, setImageProfile ] = useState(null);
@@ -26,11 +27,35 @@ export default function SettingsProfile() {
     
                 setName(storage.name);
                 setId(storage.id);
-                setImageProfile(storage.ImageProfile);
             }
         })()
         
     }, [])
+    
+
+    useEffect(() => {
+        (async () => {
+            let storage =  await JSON.parse(localStorage.getItem('user'));
+            
+            if(storage.imageProfile != null){
+                
+                var imageEnconded = storage.imageProfile;
+                let urlImage = EncodedToBlob(imageEnconded);
+                setImageProfile({url: urlImage});
+            }
+                
+            if(storage.hobby != null)
+            {
+                setInputHobby(storage.hobby);
+            }else
+            {
+                setInputHobby("Andar de moto e tocar ukulele")
+            }
+
+        })()
+        
+    },[])
+
 
     const handleExit = () => {
         history.replace("/");
@@ -40,7 +65,13 @@ export default function SettingsProfile() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const data = {name: `${name}`, hobby: `${inputHobby}`, imageProfile: `${imageProfile.url}`};
+        console.log(imageProfile);
+        let data = new FormData();
+        
+        data.append('name', name);
+        data.append('hobby', inputHobby);
+        data.append('imagePath', imageProfile.file);
+
 
         const request = await api.put(`/developers/${id}`, data);
         console.log(request);
@@ -48,6 +79,15 @@ export default function SettingsProfile() {
         history.push("/developers");
     }
 
+    const handleDelete = async (event) => {
+        event.preventDefault();
+        const response = await api.delete(`/developers/${id}`);
+        
+        console.log(response);
+        history.replace('/');
+
+        console.log("EXCLUDE");
+    }
 
     //<--- Image
     const changeFile = async ({target}) => {   
@@ -58,17 +98,8 @@ export default function SettingsProfile() {
             file: files,
             url: URL.createObjectURL(files)
         }
+        console.log(profile);
         setImageProfile(profile);
-        // if(files != null){
-
-        //     const profile = {
-        //         file: files,
-        //         url: URL.createObjectURL(files)
-        //     }
-
-        //     setProfileImage(profile);
-        // }
-
     }
     //<-- 
 
@@ -105,7 +136,8 @@ export default function SettingsProfile() {
                 </div>
 
                     <div className="saveSettings">
-                        <input className="salvar" type="submit" value="Salvar" onClick={handleSubmit}/>
+                        <input type="submit" value="Salvar" onClick={handleSubmit}/>
+                        <input type="submit" value="Excluir Conta" onClick={handleDelete} style={{backgroundColor: 'red'}}/>
                     </div>
             </Content>
         

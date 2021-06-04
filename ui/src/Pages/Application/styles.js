@@ -3,6 +3,39 @@ import { AiTwotoneSetting } from 'react-icons/ai';
 import { IoMdChatboxes } from 'react-icons/io';
 import { IoLogoFirebase } from 'react-icons/io5';
 
+export const Container = styled.div`
+
+    top: 0;
+    left: 0;
+    rigth: 0;
+    bottom: 0;
+
+    .filterContainer{
+        display: flex;
+        width: auto;
+        align-items: center;
+        justify-content: space-between;
+        position: absolute;
+        top: 10%;
+        z-index: 1;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: 700;
+
+        border-radius: 10px;
+        background: #1aaa;
+
+        p{
+            color: red;
+            cursor: pointer;
+            margin-right: 13px;
+        }
+
+        @media (min-width: 700px){
+            width: 8%;
+        }
+    }
+`;
 
 export const SettingsIcon = styled(AiTwotoneSetting)`
     width: 60px;

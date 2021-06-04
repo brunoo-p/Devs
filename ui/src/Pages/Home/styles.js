@@ -15,6 +15,7 @@ export const Content = styled.div`
     background: rgba(30,36,49, .9);
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     animation: show .5s ease-in-out;
 
     @keyframes show{
@@ -161,6 +162,9 @@ export const Form = styled.form`
         margin 0 2px;
         transform: translateY(5%);
         
+        span{
+            font-size: 14px;
+        }
         label{
             display: flex;
             padding: 15px;
@@ -201,6 +205,20 @@ export const Form = styled.form`
             }
         }
     }
+
+    .btnRegister{
+        height: 8%;
+        transform: translateY(0%);
+        animation: fade .5s ease-in;
+        
+        @keyframes fade{
+            0% {transform: scale(0)};
+            100% {transform: scale(1)};
+        }
+        :hover{
+            animation: none;
+        }
+    }
 `;
 
 export const LogoIcon = styled(IoLogoFirebase)`
@@ -221,6 +239,7 @@ export const UserIcon = styled(FaRegUserCircle)`
     height: 50px;
     color: #dfe4ea;
     opacity: .7;
+    transition: .5s ease-in;
 
 `;
 

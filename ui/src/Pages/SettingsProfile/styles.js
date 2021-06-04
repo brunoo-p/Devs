@@ -6,14 +6,13 @@ import { BsBoxArrowInLeft } from 'react-icons/bs';
 export const Content = styled.div`
     display: flex;
     width: 95%;
-    height: 80%;
+    height: 88%;
     flex-direction: column;
     justify-content: space-around;
     background: #fff;
     border-radius: 10px;
     background: #353b48;
     color: #dfe4ea;
-    //padding: 10px;
 
     input{
         width: 50%;
@@ -54,7 +53,7 @@ export const Content = styled.div`
             font-size: 18px;
         }
         input{
-            font-size: 14px;
+            font-size: 12px;
             color: whiteSmoke;
             background: transparent;
             border: 1px dashed white;
@@ -63,7 +62,6 @@ export const Content = styled.div`
 
     .card-hobby{
         border-top: 1px solid lightgrey;
-        margin-bottom: 5px;
         justify-content: flex-start;
 
         label{
@@ -72,12 +70,11 @@ export const Content = styled.div`
         
         textarea{
             width: 90%;
-            height: 10vh;
+            height: 8vh;
             padding: 20px;
             
             margin-top: 5px;
             background: transparent;
-            //border: 1px solid grey;
             border-radius: 10px;
 
             color: #dfe4ea;
@@ -101,29 +98,28 @@ export const Content = styled.div`
     }
     .saveSettings{
         padding: 5px;
-        margin-top 5%;
-        width: 30%;
+        width: 90%;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
 
-        margin-left: 30%;
         border-radius: 10px;
-        background: linear-gradient(32deg, rgba(30,36,49, .4), #2aaa );
-        cursor: pointer;
+        background: transparent;
 
         input{
-            width: 70%;
+            width: 40%;
+            margin-top: 10px;
 
-            background: transparent;
+            background: linear-gradient(32deg, rgba(30,36,49, .4), #2aaa );
             border: transparent;
 
             color: #dfe4ea;
-            opacity: .4;
+            opacity: .6;
             font-size: 15px;
             font-weight: 700;
 
-            cursor:pointer;
+            cursor: pointer;
             :hover{
                 opacity: 1;
             }

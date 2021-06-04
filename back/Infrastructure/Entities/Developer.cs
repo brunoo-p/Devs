@@ -25,9 +25,10 @@ namespace back.Infrastructure.Entities
         public string BirthDate { get;  set; }
 
         public bool IsDeleted { get; set; } = false;
-        public string ImageProfile { get; set; }
+        public byte[] ImageProfile { get; set; }
 
-        //public IFormFile PathImage { get; set; }
+        [NotMapped]
+        public IFormFile ImagePath { get; set; }
         public Developer(string name, string nickname, char gender, char schooseGender, int age, string birthDate)
         {
             Name = name;
@@ -39,7 +40,7 @@ namespace back.Infrastructure.Entities
         }
 
 
-        public Developer(string name, string hobby, string imageProfile)
+        public Developer(string name, string hobby, byte[] imageProfile)
         {
             Name = name;
             Hobby = hobby;

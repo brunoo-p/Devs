@@ -1,13 +1,16 @@
 import React from 'react';
 import TinderCard from 'react-tinder-card';
 import DetailsDev from '../DetailsDev';
+import { EncodedToBlob } from '../../Services/EncodedToBlob';
+
 import avatarDefault from '../../Assets/avatarDefault.png'
 import searching from '../../Assets/Lottie/searching.json';
 import Lottie from 'react-lottie';
 
-import { Container, Content, CardImage, CardName } from './styles';
+import { Container, Content, CardImage } from './styles';
 
 export default function ScreenApp({persons}) {
+
 
     const defaultOptions = {
         loop: true,
@@ -18,6 +21,7 @@ export default function ScreenApp({persons}) {
         }
     };
 
+
     return (
         <Container>
             <Content>
@@ -25,24 +29,22 @@ export default function ScreenApp({persons}) {
                     ?
                     <div className="lottie" >
 
-                        <h1>Não se preocupe, já estamos procurando mais pessoas</h1>
+                        <h1 id="message"> Não se preocupe, já estamos procurando mais pessoas </h1>
                         <Lottie options={defaultOptions} title="searching"/>
                     
                     </div>
                     :
                     persons?.map((person, index) => (
                         <React.Fragment key={index}>
-                            <TinderCard className='swipe' key={index}>
+                            <TinderCard className='swipe' key={index} preventSwipe={['up', 'down']}>
                                 
                                 <div className="card">
 
-                                    <CardImage src={person.ImageProfile ? person.ImageProfile : avatarDefault }>
-                                        <CardName>{person.name}</CardName>
-                                    </CardImage>
+                                    <CardImage src={person.imageProfile !== null ? EncodedToBlob(person.imageProfile) : avatarDefault } />
 
                                 </div>
+                                <DetailsDev person={person}/>
                             
-                            <DetailsDev person={person}/>
                             </TinderCard>
                         </React.Fragment>
                     ))

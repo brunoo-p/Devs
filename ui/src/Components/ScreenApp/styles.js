@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    width: 97%;
-    height: 83vh;
+    width: 100%;
+    height: 80%;
     position: relative;
     justify-content: center;
     display: flex;
@@ -10,11 +10,12 @@ export const Container = styled.div`
     border-radius: 10px;
     font-family: 'Roboto', sans serif;
     overflow: hidden;
+    transition: .5s ease-in;
 `;
 
 export const Content = styled.div`
     display: flex;
-    width: 100%;
+    width: 98%;
     height: 100%;
     align-items: flex-end;
     justify-content: center;
@@ -49,27 +50,19 @@ export const Content = styled.div`
 export const CardImage = styled.div`
     width: 100%;
     display: flex;
-    height: 100%;
+    height: 55%;
     border-radius: 12px;
-    margin-top: 5%;
+    margin-top: -45%;
 
     background-image: url(${(props) => props.src});
-    background-position: center;
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
 
-    box-shadow(0px 18px 53px 0px rgba(2,2,2));
-`;
+    filter: box-shadow(0px 18px 53px 0px rgb(2,2,2));
 
-export const CardName = styled.div`
-    display: flex;
-    align-items: flex-end;
-    margin: 0 0 60px 5px;
-    
-    padding: 10px;
-    font-size: 33px;
-    font-weight: 700;
-    
-    color: white;
-
+    transition: 1s ease-out;
+    :hover{
+        transform: scale(1.1) rotate(1deg);
+    }
 `;

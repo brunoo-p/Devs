@@ -8,7 +8,6 @@ export const Container = styled.div`
     max-width: 350px;
     height: 13vh;
     display: flex;
-    position: absolute;
     justify-content: center;
     align-items: center;
     background: transparent;
