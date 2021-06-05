@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Content, ArrowDown, ArrowUp} from './styles';
 
+import PropTypes from 'prop-types';
+
 export default function DetailDev({person}) {
 
     const [ showDetails, setShowDetails ] = useState(false);
@@ -17,10 +19,12 @@ export default function DetailDev({person}) {
                 { !showDetails ? <ArrowUp onClick={handleShowDetails} /> : <ArrowDown onClick={handleShowDetails}/> }
             </div>
             
+
             <div className="personData" style={{filter: showDetails && 'none'}}>
                 <h1> {person.name} </h1>
                 <p > {person.age} anos </p>
             </div>
+            
 
             <div className="hobby" style={{filter: showDetails && 'none'}}>
                 <label > Hobby </label>
@@ -30,4 +34,8 @@ export default function DetailDev({person}) {
             </Content>
         </Container>
     )
+}
+
+DetailDev.propTypes = {
+    person: PropTypes.string
 }

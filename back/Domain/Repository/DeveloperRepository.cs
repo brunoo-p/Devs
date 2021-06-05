@@ -90,20 +90,24 @@ namespace back.Domain.Repository
                     .ToList();
                 
 
-                if(param == null){
+                if(param == null || dev == null){
                     return dev;
                 }
                 
-                var finded = new List<Developer>();
+                List<Developer> finded = new List<Developer>();
                 
                 foreach(var find in dev){
+  
+                    if(find.Hobby != null){
 
-                    var response = find.Hobby.ToLower();
+                        var response = find.Hobby.ToLower();
+                        
+                        if(response.Contains(param)){
+
+                            finded.Add(find);
+                        };
+                    }
                     
-                    if(response.Contains(param)){
-
-                        finded.Add(find);
-                    };
                 }
 
                 return finded;

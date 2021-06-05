@@ -9,7 +9,9 @@ import Lottie from 'react-lottie';
 
 import { Container, Content, CardImage } from './styles';
 
-export default function ScreenApp({persons}) {
+import PropTypes from 'prop-types';
+
+function ScreenApp({persons}) {
 
 
     const defaultOptions = {
@@ -33,7 +35,9 @@ export default function ScreenApp({persons}) {
                         <Lottie options={defaultOptions} title="searching"/>
                     
                     </div>
+
                     :
+                    
                     persons?.map((person, index) => (
                         <React.Fragment key={index}>
                             <TinderCard className='swipe' key={index} preventSwipe={['up', 'down']}>
@@ -53,3 +57,9 @@ export default function ScreenApp({persons}) {
         </Container>
     )
 }
+
+ScreenApp.propTypes = {
+    persons: PropTypes.array
+}
+
+export default ScreenApp

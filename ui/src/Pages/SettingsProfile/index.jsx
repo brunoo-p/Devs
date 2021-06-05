@@ -20,8 +20,7 @@ export default function SettingsProfile() {
     useEffect(() => {
         (async () => {
 
-            let storage =  await JSON.parse(localStorage.getItem('user'));
-            console.log(storage);
+            let storage = JSON.parse(localStorage.getItem('user'));
             
             if(storage != null){
     
@@ -106,23 +105,28 @@ export default function SettingsProfile() {
 
     return (
         <ScreenModel>
-            <Header>
+            <Header data-testid="settingsProfileHeader">
                 <ReturnIcon onClick={() => history.replace("/developers")}  title="return"/>
                 <LogoIcon onClick={() => history.replace("/developers")}/>
                 <div style={{color: 'red', cursor: 'pointer', width: '50px', height: '15px' }} onClick={handleExit} >Sair</div>
             </Header>
 
-            <Content>
+            <Content data-testid="settingsProfileContent" >
                 <div className="card card-image">
 
                     <ImageProfile src={imageProfile ? imageProfile.url : avatarDefault}  style={{backgroundSize: imageProfile && 'cover'}}htmlFor="image-profile"/>
                     <label htmlFor="image-profile" style={{cursor: 'pointer', border: '1px solid #1aaa'}}>Alterar Foto</label>
-                    <input type="file" name="image-profile" id="image-profile" style={{display: 'none'}} onChange={changeFile}/>
+                    <input type="file" name="image-profile" id="image-profile" style={{display: 'none'}} onChange={changeFile} data-testid="inputFile"/>
                 </div>
 
                 <div className="card card-name">
                     <label >{name}</label>
-                    <input type="text"  placeholder="[ Alterar Nome ]" required onChange={(event) => setName(event.target.value)}/>
+                    <input type="text" 
+                        placeholder="[ Alterar Nome ]"
+                        required
+                        data-testid="inputName"
+                        onChange={(event) => setName(event.target.value)}
+                    />
                 </div>
 
                 <div className="card card-hobby">
@@ -131,6 +135,7 @@ export default function SettingsProfile() {
                     <textarea
                         value={inputHobby} 
                         onChange={(event) => setInputHobby(event.target.value)}
+                        data-testid='inputHobby'
                     />
                     
                 </div>
