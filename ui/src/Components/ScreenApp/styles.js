@@ -54,6 +54,7 @@ export const CardImage = styled.div`
     border-radius: 12px;
     margin-top: -45%;
 
+    background: #a5b1c2;
     background-image: url(${(props) => props.src});
     background-size: cover;
     background-position: center;

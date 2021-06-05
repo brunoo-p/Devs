@@ -20,7 +20,8 @@ namespace back.Infrastructure.Entities
 
         public int Age { get;  set; }
         
-        public string Hobby { get;  set; }
+        public string Hobby { get;  set; } = "";
+        
         [BsonRequired]
         public string BirthDate { get;  set; }
 

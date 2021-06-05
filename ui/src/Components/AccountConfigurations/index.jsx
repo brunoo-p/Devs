@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { Container, Content, ToggleOn, ToggleOff  } from './styles';
 
+import PropTypes from 'prop-types';
+
 
 export default function AccountConfiguration({setFilter, settings, setSettings}) {
 
@@ -36,13 +38,17 @@ export default function AccountConfiguration({setFilter, settings, setSettings})
 
                 </div>
 
+
                 <div className="inputFilter" style={{height: !writeFilter && '0', opacity: !writeFilter && '0' }}>
                     <input type="text" ref={inputRef} onKeyUp={handleFilter}/>
                 </div>
 
+
                 <div className="card profile">
                     <label onClick={() => history.push('/settings')}> Detalhes do meu perfil </label>
                 </div>
+
+
                 <div className="card" >
                     <label 
                         onClick={handleExit}
@@ -51,7 +57,14 @@ export default function AccountConfiguration({setFilter, settings, setSettings})
                         Sair
                     </label>
                 </div>
+                
             </Content>
         </Container>
     )
+}
+
+AccountConfiguration.propTypes = {
+    setFilter: PropTypes.func,
+    settings: PropTypes.bool,
+    setSettings: PropTypes.func, 
 }

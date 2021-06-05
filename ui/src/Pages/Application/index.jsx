@@ -83,25 +83,27 @@ export default function Application() {
     }
 
     return (
-        <Container>
+        <Container data-testid="ApplicationContainer">
             <ScreenModel>
             
                 <AccountConfiguration setFilter={setFilter}  settings={settings} setSettings={setSettings}/>
                 
-                <Header>
+                <Header data-testid='header'>
 
                     <SettingsIcon onClick={handleSettings}/>
                     <LogoIcon onClick={() => history.replace("/developers")}/>
                     <ChatIcon/>
+ 
                 </Header>
                 {filter &&
-                    <label className="filterContainer">
+                    <label className="filterContainer" data-testid="filter">
                         <p onClick={handleFilter}> X </p>
 
                         {filter}
-                    </label>}
+                    </label>
+                }
                 
-                <ScreenApp persons={persons}/>
+                <ScreenApp persons={persons} data-testeid="screenApp"/>
                 {persons.length > 0 && <InteractiveButtons/>}
         
             </ScreenModel>

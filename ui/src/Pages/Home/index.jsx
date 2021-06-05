@@ -105,13 +105,13 @@ export default function Home() {
 
     return (
         <ScreenModel>
-            <Content>
+            <Content data-testid='content'>
             {showPortal ?
                 <>
                     <div className="start" >
                         <LogoIcon />
-                        <button onClick={handleStart}> Vamos Começar </button>
-                        <button onClick={handleLogin}> Ja tenho Cadastro </button>
+                        <button onClick={handleStart} data-testid="start"> Vamos Começar </button>
+                        <button onClick={handleLogin} data-testid="login"> Ja tenho Cadastro </button>
                     </div>
 
                     <Particle  width="400px" />
@@ -133,13 +133,13 @@ export default function Home() {
                         />
                     </div>
                     {!registered ?
-                        <Form onSubmit={onRegister}>
+                        <Form onSubmit={onRegister} data-testid="register-form">
                             <label style={{color: '#dfe4ea', fontSize: '15px'}}> <Code/> Cadastrar <CodeSlash/></label>
                             
                             <label htmlFor="image-profile"> <UserIcon   style={{height: schooseGender && '30px', }}/> </label>
                             
-                            <input type="text"   id="name" placeholder="Nome" required onChange={(event) => setUser(event.target.value)}/>
-                            <input type="text"  placeholder="Nickname" required onChange={(event) => setNickname(event.target.value)}/>
+                            <input type="text"   id="name" placeholder="Nome" required onChange={(event) => setUser(event.target.value)} data-testid="inputNameRegister"/>
+                            <input type="text"  placeholder="Nickname" required onChange={(event) => setNickname(event.target.value)} data-testid="inputNicknameRegister"/>
                             
 
                             <div className="card">
@@ -154,7 +154,7 @@ export default function Home() {
                                 <div className="gender" style={{marginTop: '-15px'}}>
                                     <span> {labelOwnGender} </span>
 
-                                    <label onClick={() => handleOwnGender("M")}> Homem</label>
+                                    <label data-testid="inputGender" onClick={() => handleOwnGender("M")}> Homem</label>
                                     <label onClick={() => handleOwnGender("F")}> Mulher</label>       
                                 </div>
 
@@ -172,13 +172,13 @@ export default function Home() {
                             }
                         </Form>
                         :
-                        <Form style={{height: '45%', marginBottom: '35%'}} onSubmit={onLogin}>
+                        <Form style={{height: '45%', marginBottom: '35%'}} onSubmit={onLogin} data-testid="login-form">
 
                             <label style={{color: '#dfe4ea', fontSize: '15px'}}> <Code/> Login <CodeSlash/></label>
                             
                             <label htmlFor="image-profile"> <UserIcon/> </label>
                             
-                            <input type="text"  id="nick" placeholder="Nickname" required onChange={(event) => setNickname(event.target.value)}/>
+                            <input type="text"  id="nick" placeholder="Nickname" required onChange={(event) => setNickname(event.target.value)} data-testid="inputLogin"/>
                             
                             {
                                 nickname ? <input type="submit" id="btnSubmit" style={{cursor: 'pointer'}} /> : <button disabled={user.length > 0 ? true : false}/>
@@ -186,6 +186,7 @@ export default function Home() {
 
                             <label style={{fontSize: '18px', color: '#dfe4ea', cursor: 'pointer'}}
                                 onClick={handleStart}
+                                data-testid='callRegisterForm'
                                 > Me Cadastrar
                             </label>
                         </Form>
