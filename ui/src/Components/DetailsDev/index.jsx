@@ -13,7 +13,7 @@ export default function DetailDev({person}) {
 
 
     return (
-        <Container style={{height: showDetails ? '75%' : '35%', }}>
+        <Container style={{height: showDetails ? '75%' : '35%', }} data-testid='detailsDevContainer'>
             <Content>
             <div className="border" > 
                 { !showDetails ? <ArrowUp onClick={handleShowDetails} /> : <ArrowDown onClick={handleShowDetails}/> }
@@ -27,7 +27,7 @@ export default function DetailDev({person}) {
             
 
             <div className="hobby" style={{filter: showDetails && 'none'}}>
-                <label > Hobby </label>
+                <label htmlFor="hobby"> Hobby </label>
                 <p> {person.hobby} </p>
             </div>
             
@@ -37,5 +37,5 @@ export default function DetailDev({person}) {
 }
 
 DetailDev.propTypes = {
-    person: PropTypes.string
+    person: PropTypes.object
 }

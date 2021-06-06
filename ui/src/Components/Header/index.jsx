@@ -1,5 +1,4 @@
 import { Container, Content } from './styles';
-import PropTypes from 'prop-types';
 
 export default function Header({ children }) {
     
@@ -12,6 +11,3 @@ export default function Header({ children }) {
     )
 }
 
-Header.propTypes = {
-    children: PropTypes.element
-};
