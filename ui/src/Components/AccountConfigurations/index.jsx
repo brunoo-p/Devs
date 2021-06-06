@@ -27,12 +27,12 @@ export default function AccountConfiguration({setFilter, settings, setSettings})
     }
 
     return (
-        <Container transform={!settings ? '-100%' : '0'} opacity={settings ? '1' : '0'} style={{pointerEvents: !settings && 'none'}}>
+        <Container transform={!settings ? '-100%' : '0'} opacity={settings ? '1' : '0'} style={{pointerEvents: !settings && 'none'}} data-testid="configurationContainer">
             <Content > 
                 <div className="card">
 
                     <label> Adicionar Filtro </label>
-                    <span onClick={() => setWriteFilter(!writeFilter)}>
+                    <span onClick={() => setWriteFilter(!writeFilter)} data-testid='btnToggleFilter'>
                         {writeFilter ? <ToggleOff/> : <ToggleOn/>}    
                     </span>
 
@@ -40,12 +40,12 @@ export default function AccountConfiguration({setFilter, settings, setSettings})
 
 
                 <div className="inputFilter" style={{height: !writeFilter && '0', opacity: !writeFilter && '0' }}>
-                    <input type="text" ref={inputRef} onKeyUp={handleFilter}/>
+                    <input type="text" ref={inputRef} onKeyUp={handleFilter} data-testid='inputFilter'/>
                 </div>
 
 
                 <div className="card profile">
-                    <label onClick={() => history.push('/settings')}> Detalhes do meu perfil </label>
+                    <label onClick={() => history.push('/settings')} data-testid='toConfigurationPage'> Detalhes do meu perfil </label>
                 </div>
 
 
@@ -53,6 +53,7 @@ export default function AccountConfiguration({setFilter, settings, setSettings})
                     <label 
                         onClick={handleExit}
                         style={{color: '#ff7979', cursor: 'pointer'}}
+                        data-testid='btnExit'
                     >
                         Sair
                     </label>

@@ -88,7 +88,7 @@ export default function Application() {
             
                 <AccountConfiguration setFilter={setFilter}  settings={settings} setSettings={setSettings}/>
                 
-                <Header data-testid='header'>
+                <Header>
 
                     <SettingsIcon onClick={handleSettings}/>
                     <LogoIcon onClick={() => history.replace("/developers")}/>
