@@ -26,10 +26,10 @@ function ScreenApp({persons}) {
 
     return (
         <Container>
-            <Content>
+            <Content data-testid="screenAppContent">
                 { persons?.length <= 0
                     ?
-                    <div className="lottie" >
+                    <div className="lottie">
 
                         <h1 id="message"> Não se preocupe, já estamos procurando mais pessoas </h1>
                         <Lottie options={defaultOptions} title="searching"/>
@@ -39,7 +39,7 @@ function ScreenApp({persons}) {
                     :
                     
                     persons?.map((person, index) => (
-                        <React.Fragment key={index}>
+                        <React.Fragment key={index} >
                             <TinderCard className='swipe' key={index} preventSwipe={['up', 'down']}>
                                 
                                 <div className="card">
@@ -47,7 +47,7 @@ function ScreenApp({persons}) {
                                     <CardImage src={person.imageProfile !== null ? EncodedToBlob(person.imageProfile) : avatarDefault } />
 
                                 </div>
-                                <DetailsDev person={person}/>
+                                <DetailsDev person={person} />
                             
                             </TinderCard>
                         </React.Fragment>
