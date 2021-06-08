@@ -75,13 +75,16 @@
             "type": "docker-run",
             "label": "docker-run: debug",
             "dependsOn": [
-                "docker-build: debug"
+                "docker-build"
             ],
             "dockerRun": {
-                "os": "Windows"
+                "env": {
+                    "DEBUG": "*",
+                    "NODE_ENV": "development"
+                }
             },
-            "netCore": {
-                "appProject": "${workspaceFolder}/back/back.csproj",
+            "node": {
+                "package": "${workspaceFolder}/ui/package.json",
                 "enableDebugging": true
             }
         },
@@ -89,13 +92,24 @@
             "type": "docker-run",
             "label": "docker-run: release",
             "dependsOn": [
-                "docker-build: release"
+                "docker-build"
             ],
-            "dockerRun": {
-                "os": "Windows"
+            "platform": "node",
+            "node": {
+                "package": "${workspaceFolder}/ui/package.json"
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build",
+            "platform": "node",
+            "dockerBuild": {
+                "dockerfile": "${workspaceFolder}/ui/Dockerfile",
+                "context": "${workspaceFolder}/ui",
+                "pull": true
             },
-            "netCore": {
-                "appProject": "${workspaceFolder}/back/back.csproj"
+            "node": {
+                "package": "${workspaceFolder}/ui/package.json"
             }
         }
     ]
