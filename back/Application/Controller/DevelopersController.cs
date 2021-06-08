@@ -25,6 +25,7 @@ namespace back.Application.Controller
 
 
         [HttpGet("{id}")]
+        [Route("/")]
         public ActionResult<Developer> GetDevById(string id)
         {
 

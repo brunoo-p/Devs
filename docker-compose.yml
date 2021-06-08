@@ -1,0 +1,59 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+services:
+  api:
+    image: back
+    build:
+      context: .
+      dockerfile: back/Dockerfile
+    ports:
+      - 5000:5000
+    depends_on: 
+      - mongo
+    networks: 
+      - mongo-compose-network
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: kali
+      ME_CONFIG_BASICAUTH_PASSWORD: kali
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: exemple
+    links:
+      - mongo
+    networks:
+      - mongo-compose-network
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: exemple
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-compose-network
+
+  ui:
+    container_name: ui
+    image: 0x20h/create-react-app
+    build: 
+      context: ./ui
+      dockerfile: Dockerfile
+    ports: 
+      - 3000:3000
+    networks: 
+      - mongo-compose-network
+
+networks: 
+    mongo-compose-network:
+      driver: bridge
+    
+  
