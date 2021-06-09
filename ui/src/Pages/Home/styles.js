@@ -10,6 +10,7 @@ export const Content = styled.div`
     position: relative;
     top: 10%;
     flex-direction: column;
+    font-display: swap;
 
     border-radius: 10px;
     background: rgba(30,36,49, .9);
@@ -49,7 +50,6 @@ export const Content = styled.div`
             border-radius: 10px;
             font-size: 20px;
             font-weight: 700;
-            // background: transparent;
             background: linear-gradient(5deg,transparent 64.17%, #1aaa);
             color: #1aa;
             border: 2px solid #1aaa;

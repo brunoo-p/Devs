@@ -5,6 +5,7 @@ version: '3.4'
 services:
   api:
     image: back
+    container_name: api
     build:
       context: .
       dockerfile: back/Dockerfile
@@ -14,9 +15,11 @@ services:
       - mongo
     networks: 
       - mongo-compose-network
-
+  
   mongo-express:
     image: mongo-express
+    restart: always
+    container_name: mongo-express
     ports:
       - 8081:8081
     environment:
@@ -32,10 +35,13 @@ services:
 
   mongo:
     image: mongo
+    container_name: mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: exemple
+    volumes:
+      - './data:/data/db'
     ports:
       - "27017:27017"
     networks:
@@ -43,7 +49,6 @@ services:
 
   ui:
     container_name: ui
-    image: 0x20h/create-react-app
     build: 
       context: ./ui
       dockerfile: Dockerfile

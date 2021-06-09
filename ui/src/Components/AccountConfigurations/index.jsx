@@ -39,13 +39,24 @@ export default function AccountConfiguration({setFilter, settings, setSettings})
                 </div>
 
 
-                <div className="inputFilter" style={{height: !writeFilter && '0', opacity: !writeFilter && '0' }}>
-                    <input type="text" ref={inputRef} onKeyUp={handleFilter} data-testid='inputFilter'/>
+                <div className="inputFilter"
+                    style={{
+                        height: !writeFilter && '0',
+                        opacity: !writeFilter && '0',
+                        pointerEvents: !writeFilter && 'none'
+                    }}>
+
+                    <input type="text" ref={inputRef} onKeyUp={handleFilter} data-testid='inputFilter' placeholder="Digite sua busca"/>
                 </div>
 
 
                 <div className="card profile">
-                    <label onClick={() => history.push('/settings')} data-testid='toConfigurationPage'> Detalhes do meu perfil </label>
+                    <label
+                        onClick={() => history.push('/settings')}
+                        data-testid='toConfigurationPage'
+                    >
+                        Detalhes do meu perfil
+                    </label>
                 </div>
 
 

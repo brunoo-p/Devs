@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import api from '../../Services/api';
 import { EncodedToBlob } from '../../Services/EncodedToBlob';
+import api from '../../Services/api';
 
 import { ScreenModel, Header } from '../../Components';
 
@@ -12,10 +12,11 @@ export default function SettingsProfile() {
 
     let history = useHistory();
 
+    const [ imageProfile, setImageProfile ] = useState(null);
     const [ inputHobby, setInputHobby ] = useState("");
+    const [ nickname, setNickname ] = useState("");
     const [ name, setName ] = useState("");
     const [ id, setId ] = useState("");
-    const [ imageProfile, setImageProfile ] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -25,8 +26,10 @@ export default function SettingsProfile() {
             if(storage != null){
     
                 setName(storage.name);
+                setNickname(storage.nickname);
                 setId(storage.id);
             }
+            
         })()
         
     }, [])
@@ -43,12 +46,9 @@ export default function SettingsProfile() {
                 setImageProfile({url: urlImage});
             }
                 
-            if(storage.hobby != null)
+            if(storage.hobby?.length)
             {
                 setInputHobby(storage.hobby);
-            }else
-            {
-                setInputHobby("Andar de moto e tocar ukulele")
             }
 
         })()
@@ -61,10 +61,11 @@ export default function SettingsProfile() {
         localStorage.removeItem('user');
     }
 
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        console.log(imageProfile);
+
         let data = new FormData();
         
         data.append('name', name);
@@ -72,33 +73,35 @@ export default function SettingsProfile() {
         data.append('imagePath', imageProfile.file);
 
 
-        const request = await api.put(`/developers/${id}`, data);
-        console.log(request);
+        await api.put(`/developers/${id}`, data);
+       
+        const response = await api.post(`/developers/login/${nickname}`);
+
+        localStorage.setItem('user', JSON.stringify(response.data));
+
         
         history.push("/developers");
     }
 
     const handleDelete = async (event) => {
         event.preventDefault();
-        const response = await api.delete(`/developers/${id}`);
-        
-        console.log(response);
+        await api.delete(`/developers/${id}`);
+     
         history.replace('/');
-
-        console.log("EXCLUDE");
     }
 
     //<--- Image
     const changeFile = async ({target}) => {   
         let files = target.files[0];
 
-
-        const profile = {
-            file: files,
-            url: URL.createObjectURL(files)
+        if(files){
+            
+            const profile = {
+                file: files,
+                url: URL.createObjectURL(files)
+            }
+            setImageProfile(profile);
         }
-        console.log(profile);
-        setImageProfile(profile);
     }
     //<-- 
 

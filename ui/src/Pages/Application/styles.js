@@ -28,7 +28,7 @@ export const Container = styled.div`
         p{
             color: red;
             cursor: pointer;
-            margin-right: 13px;
+            margin-right: 10px;
         }
 
         @media (min-width: 700px){

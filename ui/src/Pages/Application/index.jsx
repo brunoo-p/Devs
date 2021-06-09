@@ -14,22 +14,13 @@ export default function Application() {
     const [ filter, setFilter ] = useState("");
 
     useEffect(() => {
+        document.addEventListener('touchstart', {passive: true});
         ( async () => {
             
 
             const finded = await GetAllDevs();
             
-            
-            let time = setTimeout(() => {
-
-                setPersons(finded);
-
-            }, 1000);
-
-            return () => {
-                clearTimeout(time);
-            }
-
+            setPersons(finded);
         })();
 
         
@@ -45,10 +36,7 @@ export default function Application() {
 
             if(filter?.length > 0){
 
-                console.log("filter", filter);
                 const request = await api.get(`/developers?param=${filter}`);
-                console.log(request);
-                
                 setPersons(request.data);
 
             }else{
@@ -65,6 +53,7 @@ export default function Application() {
 
     }, [filter])
 
+    //--> Take the sex that the user wants to find
     const GetAllDevs = async () => {
         const storage = JSON.parse(localStorage.getItem('user'));
         let param = storage.schooseGender;
@@ -73,13 +62,16 @@ export default function Application() {
 
         return request.data.filter(_ => _.id !== storage.id);
     }
-
+    //<--
 
     const handleSettings = () => {
         setSettings(!settings);
     }
     const handleFilter = () => {
         setFilter("");
+    }
+    const handleChat = () => {
+        history.push("/chat");
     }
 
     return (
@@ -92,7 +84,7 @@ export default function Application() {
 
                     <SettingsIcon onClick={handleSettings}/>
                     <LogoIcon onClick={() => history.replace("/developers")}/>
-                    <ChatIcon/>
+                    <ChatIcon onClick={handleChat}/>
  
                 </Header>
                 {filter &&

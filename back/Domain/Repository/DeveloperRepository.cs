@@ -55,7 +55,6 @@ namespace back.Domain.Repository
         {
             try
             {
-                //var dev = ifExist(id);
                 var dev = _devCollection.UpdateOne(Builders<Developer>.Filter.Where(_ => _.Id == id), Builders<Developer>.Update.Set("IsDeleted", true));
                 
 
@@ -173,7 +172,6 @@ namespace back.Domain.Repository
             }catch(Exception ex)
             {
                 throw new Exception("e", ex);
-                //return false;
             }
         }
 

@@ -99,45 +99,6 @@ namespace backApi.Test
             Assert.IsType<List<Developer>>(recebido);   
         }
 
-        //[Fact]
-        // public void Modificar_DevCadastrado_RetornarTRUEorFALSE()
-        // {
-        //     //Arrange
-        //     string idCorreto = "60b7c36eed1dde0e19ead958";
-        //     string idErrado =  "000000000000000000000009";
-
-
-        //     string arayString = "some text"; 
-        //     byte[] byteArray = Encoding.ASCII.GetBytes(arayString);
-
-        //     var dev = new Developer(
-        //         name: "Bruno",
-        //         hobby: "Ganhar dinheiro",
-        //         imageProfile: byteArray
-        //     );
-            
-        //     mockDev.Setup(_ => _.Update(idCorreto, dev)).Returns(true);
-
-        //     /*-----------------> Teste para passar <----------------------------*/
-        //     //Act
-        //     var resultadoEsperado_Correto = _repository.Update(idCorreto, dev);
-        //     var resultadoRecebido_Correto = mockDev.Object.Update(idCorreto, dev);
-            
-        //     //Assert
-        //     Assert.True(resultadoRecebido_Correto);
-        //     Assert.Equal(resultadoEsperado_Correto, resultadoRecebido_Correto);
-
-
-        //     /*------------------> Teste para falhar <----------------------------*/
-        //     //Act
-        //     var resultadoEsperado_Errado = _repository.Update(idErrado, dev);
-        //     var resultadoRecebido_Errado = mockDev.Object.Update(idErrado, dev);
-
-        //     //Assert
-        //     Assert.False(resultadoRecebido_Errado);
-        //     Assert.Equal(resultadoEsperado_Errado, resultadoRecebido_Errado);
-        // }
-
 
         [Fact]
         public void Marcar_no_BD_uma_Flag_DevDeletado()

@@ -158,9 +158,8 @@ export const ImageProfile = styled.div`
 
     width: 100%;
     height: 23vh;
-    background-image: url(${(props) => props.src});
+    background-image: url(${(props) => props.src}) !important;
     background-position: center;
-    //background-size: cover;
     background-repeat: no-repeat;
     border-radius: 10px;
 
