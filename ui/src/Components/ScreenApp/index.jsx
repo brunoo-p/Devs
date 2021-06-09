@@ -13,6 +13,18 @@ import PropTypes from 'prop-types';
 
 function ScreenApp({persons}) {
 
+    const alreadyRemoved = [];
+    let db = [] ; db = persons;
+
+
+    const swiped = (personToRemove) => {
+
+        alreadyRemoved.push(personToRemove);
+
+        db = persons.filter(person => !alreadyRemoved.includes(person.id));
+        console.log("db", db);
+    };
+
 
     const defaultOptions = {
         loop: true,
@@ -27,7 +39,7 @@ function ScreenApp({persons}) {
     return (
         <Container>
             <Content data-testid="screenAppContent">
-                { persons?.length <= 0
+                { db?.length === 0
                     ?
                     <div className="lottie">
 
@@ -38,9 +50,9 @@ function ScreenApp({persons}) {
 
                     :
                     
-                    persons?.map((person, index) => (
+                    db?.map((person, index) => (
                         <React.Fragment key={index} >
-                            <TinderCard className='swipe' key={index} preventSwipe={['up', 'down']}>
+                            <TinderCard  className='swipe' key={index} preventSwipe={['up', 'down']} onSwipe={() => swiped(person.id)}>
                                 
                                 <div className="card">
 

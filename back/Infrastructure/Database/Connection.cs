@@ -11,6 +11,8 @@ namespace back.Infrastructure.Database
             try{
 
                 var client = new MongoClient("mongodb://root:exemple@mongo");
+                //Mongo Atlas Database
+                //var client = new MongoClient("Connection String");
                 database = client.GetDatabase("Devs");
                 
             }catch(MongoException ex){

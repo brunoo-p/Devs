@@ -17,7 +17,7 @@ export default function Home() {
     const [ nickname, setNickname ] = useState("");
     const [ schooseGender, setSchooseGender ] = useState("");
     const [ ownGender, setOwnGender ] = useState("");
-    const [showPortal, setShowPortal ] = useState(true);
+    const [ showPortal, setShowPortal ] = useState(true);
     const [ registered, setRegistered ] = useState(false);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function Home() {
         
 
         const response = await api.post('/developers', {name: user, nickname, gender: ownGender, schooseGender, age, birthDate});
-        console.log(response);
+
         
         if(response.status === 201)
         {
@@ -50,7 +50,8 @@ export default function Home() {
         }
         
     }
-     const onLogin = (event) => {
+
+    const onLogin = (event) => {
         event.preventDefault();
 
         if(nickname){
@@ -83,6 +84,7 @@ export default function Home() {
         }
     }
 
+
     let labelOwnGender = '/* Me Considero *\\';
     const handleOwnGender = (gender) => {
         setOwnGender(gender);
@@ -93,12 +95,14 @@ export default function Home() {
         setSchooseGender(searchGender);
     }
     
-    const handleStart = () => {
-        setRegistered(false);
-        setShowPortal(false);
-    }
-    const handleLogin = () => {
-        setRegistered(true);
+
+    const handleOption = (type) => {
+        if(type === 'start'){
+
+            setRegistered(false);
+        }else{
+            setRegistered(true);
+        }
         setShowPortal(false);
     }
     
@@ -110,8 +114,8 @@ export default function Home() {
                 <>
                     <div className="start" >
                         <LogoIcon />
-                        <button onClick={handleStart} data-testid="start"> Vamos Começar </button>
-                        <button onClick={handleLogin} data-testid="login"> Ja tenho Cadastro </button>
+                        <button onClick={() => handleOption('start')} data-testid="start"> Vamos Começar </button>
+                        <button onClick={() => handleOption('login')} data-testid="login"> Ja tenho Cadastro </button>
                     </div>
 
                     <Particle  width="400px" />
@@ -185,7 +189,7 @@ export default function Home() {
                             }
 
                             <label style={{fontSize: '18px', color: '#dfe4ea', cursor: 'pointer'}}
-                                onClick={handleStart}
+                                onClick={() => handleOption('start')}
                                 data-testid='callRegisterForm'
                                 > Me Cadastrar
                             </label>

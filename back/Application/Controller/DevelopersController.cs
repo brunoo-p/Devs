@@ -17,12 +17,6 @@ namespace back.Application.Controller
             _repository = repository;
         }
 
-        // [HttpGet]
-        // public ActionResult<List<Developer>> GetAll()
-        // {
-        //     var devList = _repository.
-        // }
-
 
         [HttpGet("{id}")]
         [Route("/")]

@@ -55,7 +55,7 @@ export const CardImage = styled.div`
     margin-top: -45%;
 
     background: #a5b1c2;
-    background-image: url(${(props) => props.src});
+    background-image: url(${(props) => props.src}) !important;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

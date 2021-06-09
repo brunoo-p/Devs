@@ -9,6 +9,7 @@ export const Container = styled.div`
     border-radius: 10px;
     background: white;
     transition: 0.5s ease-in
+    color: #34495e;
 
 `;
 
